@@ -3,66 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>3D Artists Dashboard</title>
+  <title>Marvel Movies Dashboard</title>
   <style>
-    * {
-      box-sizing: border-box;
+    body {
       margin: 0;
       padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #101820;
+      color: #fff;
     }
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #1e1e2f;
-      color: #fff;
+    header {
       padding: 20px;
+      text-align: center;
+      background-color: #e23636;
+      color: white;
     }
 
     h1 {
-      text-align: center;
-      margin-bottom: 30px;
+      margin: 0;
+      font-size: 2rem;
     }
 
-    .artist-grid {
+    .movie-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
+      padding: 20px;
     }
 
-    .artist-card {
-      background-color: #2d2d44;
+    .movie-card {
+      background-color: #1c1c2e;
       border-radius: 10px;
       overflow: hidden;
-      transition: transform 0.2s;
       cursor: pointer;
+      transition: transform 0.2s;
     }
 
-    .artist-card:hover {
-      transform: scale(1.03);
+    .movie-card:hover {
+      transform: scale(1.05);
     }
 
-    .artist-img {
+    .movie-poster {
       width: 100%;
-      height: 180px;
+      height: 300px;
       object-fit: cover;
     }
 
-    .artist-info {
+    .movie-info {
       padding: 15px;
     }
 
-    .artist-name {
-      font-size: 1.2em;
+    .movie-title {
+      font-size: 1.2rem;
       font-weight: bold;
     }
 
-    .artist-bio {
-      font-size: 0.9em;
-      margin-top: 10px;
+    .movie-details {
+      font-size: 0.9rem;
       color: #ccc;
+      margin-top: 5px;
     }
 
-    /* Modal Styles */
+    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -71,14 +74,14 @@
       background-color: rgba(0,0,0,0.8);
       justify-content: center;
       align-items: center;
-      z-index: 1000;
+      z-index: 999;
     }
 
     .modal-content {
-      background-color: #2d2d44;
+      background-color: #2b2b3c;
       padding: 20px;
       border-radius: 10px;
-      max-width: 800px;
+      max-width: 600px;
       width: 90%;
       max-height: 90vh;
       overflow-y: auto;
@@ -91,128 +94,167 @@
     }
 
     .modal-header h2 {
-      font-size: 1.5em;
+      font-size: 1.4rem;
     }
 
     .close-btn {
-      font-size: 1.5em;
+      font-size: 1.5rem;
       cursor: pointer;
-      color: #fff;
     }
 
-    .collection-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .collection-grid img {
-      width: 100%;
+    .character {
+      margin-top: 15px;
+      background-color: #383854;
+      padding: 10px;
       border-radius: 8px;
-      object-fit: cover;
-      height: 140px;
     }
 
-    @media (max-width: 600px) {
-      .modal-content {
-        padding: 10px;
-      }
+    .character-name {
+      font-weight: bold;
+    }
+
+    .character-powers {
+      font-size: 0.9rem;
+      color: #ddd;
+      margin-top: 5px;
     }
   </style>
 </head>
 <body>
-  <h1>3D Artists Collection Dashboard</h1>
-  <div class="artist-grid" id="artistGrid">
-    <!-- Artist cards injected by JavaScript -->
+
+  <header>
+    <h1>Marvel Movies Dashboard</h1>
+  </header>
+
+  <div class="movie-grid" id="movieGrid">
+    <!-- Cards will be inserted here -->
   </div>
 
   <!-- Modal -->
-  <div class="modal" id="collectionModal">
+  <div class="modal" id="movieModal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 id="modalArtistName">Artist Name</h2>
+        <h2 id="modalMovieTitle">Movie Title</h2>
         <span class="close-btn" onclick="closeModal()">&times;</span>
       </div>
-      <div class="collection-grid" id="collectionGrid">
-        <!-- Collection images go here -->
+      <div id="modalCharacters">
+        <!-- Characters injected here -->
       </div>
     </div>
   </div>
 
   <script>
-    const artists = [
+    const movies = [
       {
-        name: "Ava Morales",
-        image: "https://i.imgur.com/ZKfhYvG.jpg",
-        bio: "Digital sculptor blending fantasy with realism.",
-        collection: [
-          "https://i.imgur.com/JJp6DCd.jpeg",
-          "https://i.imgur.com/0Clv2GU.jpeg",
-          "https://i.imgur.com/Eq6ZTyt.jpeg"
+        title: "Avengers: Endgame",
+        year: 2019,
+        collection: "$2.798 billion",
+        poster: "https://i.imgur.com/2BhF1FU.jpg",
+        characters: [
+          {
+            name: "Iron Man",
+            powers: "Genius intellect, powered armor suit, repulsor blasts, flight."
+          },
+          {
+            name: "Thor",
+            powers: "God of Thunder, super strength, Mjolnir and Stormbreaker."
+          }
         ]
       },
       {
-        name: "Leo Zhang",
-        image: "https://i.imgur.com/LjkbdhU.jpg",
-        bio: "Specialist in hard-surface modeling and sci-fi assets.",
-        collection: [
-          "https://i.imgur.com/qZT2b2x.jpeg",
-          "https://i.imgur.com/KhbFdQl.jpeg",
-          "https://i.imgur.com/sHZf84h.jpeg"
+        title: "Spider-Man: No Way Home",
+        year: 2021,
+        collection: "$1.921 billion",
+        poster: "https://i.imgur.com/s1FQ6aU.jpg",
+        characters: [
+          {
+            name: "Spider-Man (Peter Parker)",
+            powers: "Wall-crawling, super strength, spider-sense, web-shooting."
+          },
+          {
+            name: "Doctor Strange",
+            powers: "Mastery of mystic arts, teleportation, time manipulation."
+          }
         ]
       },
       {
-        name: "Sofia Ramires",
-        image: "https://i.imgur.com/MYyyeGW.jpg",
-        bio: "3D character artist passionate about stylized art.",
-        collection: [
-          "https://i.imgur.com/bHDJDaB.jpeg",
-          "https://i.imgur.com/WExkJUp.jpeg",
-          "https://i.imgur.com/ce2IrRa.jpeg"
+        title: "Black Panther",
+        year: 2018,
+        collection: "$1.347 billion",
+        poster: "https://i.imgur.com/pkeYkXD.jpg",
+        characters: [
+          {
+            name: "Black Panther (T’Challa)",
+            powers: "Enhanced strength and agility, vibranium suit, expert combat skills."
+          },
+          {
+            name: "Shuri",
+            powers: "Genius inventor, technological expertise, vibranium weapons."
+          }
+        ]
+      },
+      {
+        title: "Guardians of the Galaxy",
+        year: 2014,
+        collection: "$773 million",
+        poster: "https://i.imgur.com/M8HhNjG.jpg",
+        characters: [
+          {
+            name: "Star-Lord",
+            powers: "Skilled pilot and marksman, elemental guns, part-Celestial."
+          },
+          {
+            name: "Groot",
+            powers: "Regeneration, strength, ability to extend limbs."
+          }
         ]
       }
     ];
 
-    const artistGrid = document.getElementById("artistGrid");
-    const collectionModal = document.getElementById("collectionModal");
-    const modalArtistName = document.getElementById("modalArtistName");
-    const collectionGrid = document.getElementById("collectionGrid");
+    const movieGrid = document.getElementById("movieGrid");
+    const movieModal = document.getElementById("movieModal");
+    const modalMovieTitle = document.getElementById("modalMovieTitle");
+    const modalCharacters = document.getElementById("modalCharacters");
 
-    function renderArtists() {
-      artists.forEach((artist, index) => {
+    function renderMovies() {
+      movies.forEach((movie, index) => {
         const card = document.createElement("div");
-        card.className = "artist-card";
-        card.onclick = () => showCollection(index);
+        card.className = "movie-card";
+        card.onclick = () => openModal(index);
         card.innerHTML = `
-          <img src="${artist.image}" class="artist-img" alt="${artist.name}">
-          <div class="artist-info">
-            <div class="artist-name">${artist.name}</div>
-            <div class="artist-bio">${artist.bio}</div>
+          <img src="${movie.poster}" class="movie-poster" alt="${movie.title}">
+          <div class="movie-info">
+            <div class="movie-title">${movie.title}</div>
+            <div class="movie-details">Year: ${movie.year}</div>
+            <div class="movie-details">Collection: ${movie.collection}</div>
           </div>
         `;
-        artistGrid.appendChild(card);
+        movieGrid.appendChild(card);
       });
     }
 
-    function showCollection(index) {
-      const artist = artists[index];
-      modalArtistName.textContent = artist.name;
-      collectionGrid.innerHTML = "";
-      artist.collection.forEach(imgUrl => {
-        const img = document.createElement("img");
-        img.src = imgUrl;
-        collectionGrid.appendChild(img);
+    function openModal(index) {
+      const movie = movies[index];
+      modalMovieTitle.textContent = movie.title;
+      modalCharacters.innerHTML = '';
+      movie.characters.forEach(character => {
+        const div = document.createElement("div");
+        div.className = "character";
+        div.innerHTML = `
+          <div class="character-name">${character.name}</div>
+          <div class="character-powers">${character.powers}</div>
+        `;
+        modalCharacters.appendChild(div);
       });
-      collectionModal.style.display = "flex";
+      movieModal.style.display = "flex";
     }
 
     function closeModal() {
-      collectionModal.style.display = "none";
+      movieModal.style.display = "none";
     }
 
     // Initialize
-    renderArtists();
+    renderMovies();
   </script>
 </body>
 </html>
