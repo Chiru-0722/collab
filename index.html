@@ -1,393 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Formula 1 Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formula 1 Data Portal</title>
 <style>
-  /* Reset & base */
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #111;
-    color: #eee;
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-  }
-  header {
-    background: #d40000;
-    padding: 1rem 2rem;
-    font-size: 1.8rem;
-    font-weight: 700;
-    text-align: center;
-    letter-spacing: 2px;
-    box-shadow: 0 4px 8px rgba(212,0,0,0.8);
-  }
-  main {
-    flex-grow: 1;
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
-  .controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-  .controls > * {
-    flex: 1 1 220px;
-  }
-  input[type="search"], select {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    font-size: 1rem;
-    border-radius: 6px;
-    border: none;
-    outline: none;
-  }
-  input[type="search"] {
-    background: #222;
-    color: #eee;
-  }
-  select {
-    background: #222;
-    color: #eee;
-  }
-  input[type="search"]::placeholder {
-    color: #999;
-  }
-
-  /* Table */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #222;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.7);
-  }
-  thead {
-    background: #d40000;
-    color: #fff;
-  }
-  th, td {
-    padding: 0.75rem 1rem;
-    text-align: left;
-  }
-  tbody tr {
-    border-bottom: 1px solid #444;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  tbody tr:hover {
-    background: #333;
-  }
-
-  /* Modal */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.8);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  .modal-overlay.active {
-    display: flex;
-  }
-  .modal {
-    background: #111;
-    border-radius: 10px;
-    max-width: 550px;
-    width: 90%;
-    padding: 1.5rem 2rem;
-    box-shadow: 0 0 30px #d40000;
-    color: #eee;
-    position: relative;
-  }
-  .modal h2 {
-    margin-top: 0;
-    color: #d40000;
-  }
-  .modal .close-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    font-size: 1.6rem;
-    color: #d40000;
-    cursor: pointer;
-  }
-  .modal p {
-    margin: 0.8rem 0;
-  }
-
-  @media (max-width: 600px) {
-    .controls {
-      flex-direction: column;
-    }
-  }
+  body { font-family: Arial, sans-serif; margin: 0; padding: 0; color: #222; background-color: #f5f5f5; }
+  header { background: #000; color: #fff; padding: 20px; text-align: center; }
+  nav a { color: #fff; margin: 0 10px; text-decoration: none; }
+  section { padding: 20px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th, td { padding: 8px 12px; border: 1px solid #ccc; text-align: left; }
+  th { background: #333; color: #fff; }
+  .search-box { margin-bottom: 10px; }
+  .cars { display: flex; flex-wrap: wrap; gap: 20px; }
+  .car-card { width: 200px; background: #fff; padding: 10px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+  .car-card img { width: 100%; border-radius: 4px; }
+  footer { text-align: center; padding: 15px; background: #000; color: #fff; margin-top: 20px; }
 </style>
 </head>
 <body>
 
-<header>Formula 1 Dashboard</header>
+<header>
+  <h1>Formula 1 Data Portal</h1>
+  <nav>
+    <a href="#drivers">Drivers</a>
+    <a href="#cars">Cars</a>
+  </nav>
+</header>
 
-<main>
-  <div class="controls">
-    <input type="search" id="searchInput" placeholder="Search drivers or cars..." aria-label="Search drivers or cars" />
-    <select id="teamFilter" aria-label="Filter by team">
-      <option value="">All Teams</option>
-    </select>
-  </div>
-
-  <table aria-label="Formula 1 Drivers and Car Models">
+<section id="drivers">
+  <h2>F1 Drivers — 2025 Season</h2>
+  <input type="text" id="driverSearch" class="search-box" placeholder="Search drivers by name or team...">
+  <table id="driversTable">
     <thead>
-      <tr>
-        <th>Driver</th>
-        <th>Team</th>
-        <th>Nationality</th>
-        <th>Car Model</th>
-        <th>Points</th>
-        <th>Wins</th>
-      </tr>
+      <tr><th>Name</th><th>Team</th><th>Car Number</th><th>Nationality</th></tr>
     </thead>
-    <tbody id="driversTableBody">
-      <!-- Rows generated here -->
+    <tbody>
+      <!-- JavaScript will populate this -->
     </tbody>
   </table>
-</main>
+</section>
 
-<!-- Modal -->
-<div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
-  <div class="modal">
-    <button class="close-btn" id="modalClose" aria-label="Close modal">&times;</button>
-    <h2 id="modalTitle">Driver Name</h2>
-    <p><strong>Team:</strong> <span id="modalTeam"></span></p>
-    <p><strong>Nationality:</strong> <span id="modalNationality"></span></p>
-    <p><strong>Car Model:</strong> <span id="modalCarModel"></span></p>
-    <p><strong>Car Specs:</strong> <span id="modalCarSpecs"></span></p>
-    <p><strong>Points:</strong> <span id="modalPoints"></span></p>
-    <p><strong>Wins:</strong> <span id="modalWins"></span></p>
-    <p><strong>Biography:</strong></p>
-    <p id="modalBio"></p>
+<section id="cars">
+  <h2>Team Car Models</h2>
+  <div class="cars">
+    <!-- Example cards -->
+    <div class="car-card">
+      <img src="https://via.placeholder.com/200x100.png?text=Mercedes+W16" alt="Mercedes W16">
+      <h4>Mercedes W16</h4>
+      <p>Driven by George Russell &amp; Kimi Antonelli</p>
+    </div>
+    <div class="car-card">
+      <img src="https://via.placeholder.com/200x100.png?text=Aston+Martin+AMR25" alt="Aston Martin AMR25">
+      <h4>Aston Martin AMR25</h4>
+      <p>Driven by Fernando Alonso &amp; Lance Stroll</p>
+    </div>
+    <div class="car-card">
+      <img src="https://via.placeholder.com/200x100.png?text=Ferrari+SF‑25" alt="Ferrari SF‑25">
+      <h4>Ferrari SF‑25</h4>
+      <p>Driven by Charles Leclerc &amp; Lewis Hamilton</p>
+    </div>
+    <div class="car-card">
+      <img src="https://via.placeholder.com/200x100.png?text=McLaren+MCL39" alt="McLaren MCL39">
+      <h4>McLaren MCL39</h4>
+      <p>Driven by Lando Norris &amp; Oscar Piastri</p>
+    </div>
+    <!-- Add more as needed -->
   </div>
-</div>
+</section>
+
+<footer>
+  <p>&copy; 2025 F1 Data Portal</p>
+</footer>
 
 <script>
-  const drivers = [
-    {
-      driver: "Max Verstappen",
-      team: "Red Bull Racing",
-      nationality: "Netherlands",
-      carModel: "RB19",
-      carSpecs: "Honda RA621H V6 Turbo Hybrid, 1000+ hp",
-      points: 312,
-      wins: 14,
-      bio: "Max Verstappen is known for his aggressive driving style and consistency, making him one of the top contenders in Formula 1."
-    },
-    {
-      driver: "Lewis Hamilton",
-      team: "Mercedes",
-      nationality: "United Kingdom",
-      carModel: "W14",
-      carSpecs: "Mercedes-AMG F1 M14 E Performance V6 Turbo Hybrid, 1000+ hp",
-      points: 278,
-      wins: 10,
-      bio: "Lewis Hamilton is a seven-time world champion, known for his smooth driving and tactical brilliance."
-    },
-    {
-      driver: "Charles Leclerc",
-      team: "Ferrari",
-      nationality: "Monaco",
-      carModel: "F1-75",
-      carSpecs: "Ferrari 065/6 V6 Turbo Hybrid, 1000+ hp",
-      points: 188,
-      wins: 2,
-      bio: "Charles Leclerc is a young talent with impressive qualifying pace and racecraft."
-    },
-    {
-      driver: "Sergio Pérez",
-      team: "Red Bull Racing",
-      nationality: "Mexico",
-      carModel: "RB19",
-      carSpecs: "Honda RA621H V6 Turbo Hybrid, 1000+ hp",
-      points: 165,
-      wins: 1,
-      bio: "Sergio Pérez is an experienced driver known for his tire management and race strategy."
-    },
-    {
-      driver: "George Russell",
-      team: "Mercedes",
-      nationality: "United Kingdom",
-      carModel: "W14",
-      carSpecs: "Mercedes-AMG F1 M14 E Performance V6 Turbo Hybrid, 1000+ hp",
-      points: 150,
-      wins: 0,
-      bio: "George Russell is a promising young driver with strong qualifying performances."
-    },
-    {
-      driver: "Carlos Sainz",
-      team: "Ferrari",
-      nationality: "Spain",
-      carModel: "F1-75",
-      carSpecs: "Ferrari 065/6 V6 Turbo Hybrid, 1000+ hp",
-      points: 140,
-      wins: 0,
-      bio: "Carlos Sainz is known for his consistency and adaptability across varying conditions."
-    },
-    {
-      driver: "Lando Norris",
-      team: "McLaren",
-      nationality: "United Kingdom",
-      carModel: "MCL60",
-      carSpecs: "Mercedes-AMG F1 M14 E Performance V6 Turbo Hybrid, 1000+ hp",
-      points: 132,
-      wins: 0,
-      bio: "Lando Norris is an exciting young driver with excellent race pace and overtaking skills."
-    },
-    {
-      driver: "Fernando Alonso",
-      team: "Aston Martin",
-      nationality: "Spain",
-      carModel: "AMR23",
-      carSpecs: "Mercedes-AMG F1 M14 E Performance V6 Turbo Hybrid, 1000+ hp",
-      points: 98,
-      wins: 0,
-      bio: "Fernando Alonso is a two-time world champion making a strong comeback with Aston Martin."
-    },
-    {
-      driver: "Esteban Ocon",
-      team: "Alpine",
-      nationality: "France",
-      carModel: "A523",
-      carSpecs: "Renault E-Tech RE23 V6 Turbo Hybrid, 1000+ hp",
-      points: 72,
-      wins: 0,
-      bio: "Esteban Ocon is a reliable driver known for solid race results and team play."
-    },
-    {
-      driver: "Pierre Gasly",
-      team: "Alpine",
-      nationality: "France",
-      carModel: "A523",
-      carSpecs: "Renault E-Tech RE23 V6 Turbo Hybrid, 1000+ hp",
-      points: 58,
-      wins: 0,
-      bio: "Pierre Gasly is a talented driver known for extracting maximum performance in tricky conditions."
-    }
-  ];
+// Sample drivers data based on 2025 F1 grid - 20 drivers (not 30 due to data)
+const drivers = [
+  { name: 'Max Verstappen', team: 'Red Bull', number: 1, nationality: 'Netherlands' },
+  { name: 'Liam Lawson', team: 'Red Bull', number: 30, nationality: 'New Zealand' },
+  { name: 'Charles Leclerc', team: 'Ferrari', number: 16, nationality: 'Monaco' },
+  { name: 'Lewis Hamilton', team: 'Ferrari', number: 44, nationality: 'Great Britain' },
+  { name: 'George Russell', team: 'Mercedes', number: 63, nationality: 'Great Britain' },
+  { name: 'Kimi Antonelli', team: 'Mercedes', number: 12, nationality: 'Italy' },
+  { name: 'Lando Norris', team: 'McLaren', number: 4, nationality: 'Great Britain' },
+  { name: 'Oscar Piastri', team: 'McLaren', number: 81, nationality: 'Australia' },
+  { name: 'Fernando Alonso', team: 'Aston Martin', number: 14, nationality: 'Spain' },
+  { name: 'Lance Stroll', team: 'Aston Martin', number: 18, nationality: 'Canada' },
+  { name: 'Pierre Gasly', team: 'Alpine', number: 10, nationality: 'France' },
+  { name: 'Jack Doohan', team: 'Alpine', number: 7, nationality: 'Australia' },
+  { name: 'Esteban Ocon', team: 'Haas', number: 31, nationality: 'France' },
+  { name: 'Oliver Bearman', team: 'Haas', number: 87, nationality: 'Great Britain' },
+  { name: 'Yuki Tsunoda', team: 'Racing Bulls', number: 22, nationality: 'Japan' },
+  { name: 'Isack Hadjar', team: 'Racing Bulls', number: 6, nationality: 'France' },
+  { name: 'Alex Albon', team: 'Williams', number: 23, nationality: 'Thailand' },
+  { name: 'Carlos Sainz', team: 'Williams', number: 55, nationality: 'Spain' },
+  { name: 'Nico Hulkenberg', team: 'Kick Sauber', number: 27, nationality: 'Germany' },
+  { name: 'Gabriel Bortoleto', team: 'Kick Sauber', number: 5, nationality: 'Brazil' },
+];
 
-  const tableBody = document.getElementById('driversTableBody');
-  const searchInput = document.getElementById('searchInput');
-  const teamFilter = document.getElementById('teamFilter');
-  const modal = document.getElementById('modal');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalTeam = document.getElementById('modalTeam');
-  const modalNationality = document.getElementById('modalNationality');
-  const modalCarModel = document.getElementById('modalCarModel');
-  const modalCarSpecs = document.getElementById('modalCarSpecs');
-  const modalPoints = document.getElementById('modalPoints');
-  const modalWins = document.getElementById('modalWins');
-  const modalBio = document.getElementById('modalBio');
-  const modalClose = document.getElementById('modalClose');
-
-  // Populate team filter dynamically
-  function populateTeamFilter() {
-    const teams = [...new Set(drivers.map(d => d.team))].sort();
-    for (const team of teams) {
-      const option = document.createElement('option');
-      option.value = team;
-      option.textContent = team;
-      teamFilter.appendChild(option);
-    }
-  }
-
-  // Render table rows based on filtered data
-  function renderTable(data) {
-    tableBody.innerHTML = '';
-    if (data.length === 0) {
-      tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:1rem;">No matching drivers found.</td></tr>';
-      return;
-    }
-    data.forEach(driver => {
-      const tr = document.createElement('tr');
-      tr.tabIndex = 0; // make row focusable for accessibility
-      tr.innerHTML = `
-        <td>${driver.driver}</td>
-        <td>${driver.team}</td>
-        <td>${driver.nationality}</td>
-        <td>${driver.carModel}</td>
-        <td>${driver.points}</td>
-        <td>${driver.wins}</td>
-      `;
-      tr.addEventListener('click', () => openModal(driver));
-      tr.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openModal(driver);
-        }
-      });
-      tableBody.appendChild(tr);
-    });
-  }
-
-  // Filter logic
-  function filterDrivers() {
-    const searchTerm = searchInput.value.trim().toLowerCase();
-    const selectedTeam = teamFilter.value;
-
-    const filtered = drivers.filter(d => {
-      const matchSearch = d.driver.toLowerCase().includes(searchTerm) ||
-                          d.carModel.toLowerCase().includes(searchTerm);
-      const matchTeam = selectedTeam ? d.team === selectedTeam : true;
-      return matchSearch && matchTeam;
-    });
-
-    renderTable(filtered);
-  }
-
-  // Modal open
-  function openModal(driver) {
-    modalTitle.textContent = driver.driver;
-    modalTeam.textContent = driver.team;
-    modalNationality.textContent = driver.nationality;
-    modalCarModel.textContent = driver.carModel;
-    modalCarSpecs.textContent = driver.carSpecs;
-    modalPoints.textContent = driver.points;
-    modalWins.textContent = driver.wins;
-    modalBio.textContent = driver.bio;
-
-    modal.classList.add('active');
-    modal.focus();
-  }
-
-  // Modal close
-  function closeModal() {
-    modal.classList.remove('active');
-  }
-
-  // Event listeners
-  searchInput.addEventListener('input', filterDrivers);
-  teamFilter.addEventListener('change', filterDrivers);
-  modalClose.addEventListener('click', closeModal);
-  modal.addEventListener('click', e => {
-    if (e.target === modal) closeModal();
+// Function to display drivers in table
+function displayDrivers(list) {
+  const tbody = document.querySelector('#driversTable tbody');
+  tbody.innerHTML = '';
+  list.forEach(d => {
+    const row = document.createElement('tr');
+    row.innerHTML = `<td>${d.name}</td><td>${d.team}</td><td>${d.number}</td><td>${d.nationality}</td>`;
+    tbody.appendChild(row);
   });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) {
-      closeModal();
-    }
-  });
+}
 
-  // Init
-  populateTeamFilter();
-  renderTable(drivers);
+// Filter logic
+document.getElementById('driverSearch').addEventListener('input', (e) => {
+  const query = e.target.value.toLowerCase();
+  const filtered = drivers.filter(d =>
+    d.name.toLowerCase().includes(query) ||
+    d.team.toLowerCase().includes(query)
+  );
+  displayDrivers(filtered);
+});
+
+// Initial display
+displayDrivers(drivers);
 </script>
 
 </body>
