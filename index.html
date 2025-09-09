@@ -1,127 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Formula 1 Data Portal</title>
-<style>
-  body { font-family: Arial, sans-serif; margin: 0; padding: 0; color: #222; background-color: #f5f5f5; }
-  header { background: #000; color: #fff; padding: 20px; text-align: center; }
-  nav a { color: #fff; margin: 0 10px; text-decoration: none; }
-  section { padding: 20px; }
-  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-  th, td { padding: 8px 12px; border: 1px solid #ccc; text-align: left; }
-  th { background: #333; color: #fff; }
-  .search-box { margin-bottom: 10px; }
-  .cars { display: flex; flex-wrap: wrap; gap: 20px; }
-  .car-card { width: 200px; background: #fff; padding: 10px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
-  .car-card img { width: 100%; border-radius: 4px; }
-  footer { text-align: center; padding: 15px; background: #000; color: #fff; margin-top: 20px; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formula 1 2025 Driver Roster</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #0b0c10;
+      color: #ffffff;
+    }
+    header {
+      background: #1f2833;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      color: #66fcf1;
+    }
+    .search-bar {
+      padding: 10px;
+      text-align: center;
+    }
+    .search-bar input {
+      width: 300px;
+      padding: 8px;
+      border-radius: 4px;
+      border: none;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+    .card {
+      background: #1f2833;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 280px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: scale(1.03);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-content {
+      padding: 15px;
+    }
+    .card-content h3 {
+      margin: 0 0 10px;
+      color: #66fcf1;
+    }
+    .card-content p {
+      margin: 5px 0;
+      color: #c5c6c7;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #1f2833;
+      color: #45a29e;
+    }
+  </style>
 </head>
 <body>
 
 <header>
-  <h1>Formula 1 Data Portal</h1>
-  <nav>
-    <a href="#drivers">Drivers</a>
-    <a href="#cars">Cars</a>
-  </nav>
+  <h1>Formula 1 Driver Profiles – 2025</h1>
 </header>
 
-<section id="drivers">
-  <h2>F1 Drivers — 2025 Season</h2>
-  <input type="text" id="driverSearch" class="search-box" placeholder="Search drivers by name or team...">
-  <table id="driversTable">
-    <thead>
-      <tr><th>Name</th><th>Team</th><th>Car Number</th><th>Nationality</th></tr>
-    </thead>
-    <tbody>
-      <!-- JavaScript will populate this -->
-    </tbody>
-  </table>
-</section>
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="Search by name or team..." />
+</div>
 
-<section id="cars">
-  <h2>Team Car Models</h2>
-  <div class="cars">
-    <!-- Example cards -->
-    <div class="car-card">
-      <img src="https://via.placeholder.com/200x100.png?text=Mercedes+W16" alt="Mercedes W16">
-      <h4>Mercedes W16</h4>
-      <p>Driven by George Russell &amp; Kimi Antonelli</p>
-    </div>
-    <div class="car-card">
-      <img src="https://via.placeholder.com/200x100.png?text=Aston+Martin+AMR25" alt="Aston Martin AMR25">
-      <h4>Aston Martin AMR25</h4>
-      <p>Driven by Fernando Alonso &amp; Lance Stroll</p>
-    </div>
-    <div class="car-card">
-      <img src="https://via.placeholder.com/200x100.png?text=Ferrari+SF‑25" alt="Ferrari SF‑25">
-      <h4>Ferrari SF‑25</h4>
-      <p>Driven by Charles Leclerc &amp; Lewis Hamilton</p>
-    </div>
-    <div class="car-card">
-      <img src="https://via.placeholder.com/200x100.png?text=McLaren+MCL39" alt="McLaren MCL39">
-      <h4>McLaren MCL39</h4>
-      <p>Driven by Lando Norris &amp; Oscar Piastri</p>
-    </div>
-    <!-- Add more as needed -->
-  </div>
-</section>
+<div class="container" id="driverCards">
+  <!-- Cards will be injected here -->
+</div>
 
 <footer>
-  <p>&copy; 2025 F1 Data Portal</p>
+  &copy; 2025 Formula 1 Data Portal
 </footer>
 
 <script>
-// Sample drivers data based on 2025 F1 grid - 20 drivers (not 30 due to data)
-const drivers = [
-  { name: 'Max Verstappen', team: 'Red Bull', number: 1, nationality: 'Netherlands' },
-  { name: 'Liam Lawson', team: 'Red Bull', number: 30, nationality: 'New Zealand' },
-  { name: 'Charles Leclerc', team: 'Ferrari', number: 16, nationality: 'Monaco' },
-  { name: 'Lewis Hamilton', team: 'Ferrari', number: 44, nationality: 'Great Britain' },
-  { name: 'George Russell', team: 'Mercedes', number: 63, nationality: 'Great Britain' },
-  { name: 'Kimi Antonelli', team: 'Mercedes', number: 12, nationality: 'Italy' },
-  { name: 'Lando Norris', team: 'McLaren', number: 4, nationality: 'Great Britain' },
-  { name: 'Oscar Piastri', team: 'McLaren', number: 81, nationality: 'Australia' },
-  { name: 'Fernando Alonso', team: 'Aston Martin', number: 14, nationality: 'Spain' },
-  { name: 'Lance Stroll', team: 'Aston Martin', number: 18, nationality: 'Canada' },
-  { name: 'Pierre Gasly', team: 'Alpine', number: 10, nationality: 'France' },
-  { name: 'Jack Doohan', team: 'Alpine', number: 7, nationality: 'Australia' },
-  { name: 'Esteban Ocon', team: 'Haas', number: 31, nationality: 'France' },
-  { name: 'Oliver Bearman', team: 'Haas', number: 87, nationality: 'Great Britain' },
-  { name: 'Yuki Tsunoda', team: 'Racing Bulls', number: 22, nationality: 'Japan' },
-  { name: 'Isack Hadjar', team: 'Racing Bulls', number: 6, nationality: 'France' },
-  { name: 'Alex Albon', team: 'Williams', number: 23, nationality: 'Thailand' },
-  { name: 'Carlos Sainz', team: 'Williams', number: 55, nationality: 'Spain' },
-  { name: 'Nico Hulkenberg', team: 'Kick Sauber', number: 27, nationality: 'Germany' },
-  { name: 'Gabriel Bortoleto', team: 'Kick Sauber', number: 5, nationality: 'Brazil' },
-];
+  const drivers = [
+    { name: "Max Verstappen", team: "Red Bull", car: "RB21", nationality: "Netherlands" },
+    { name: "Sergio Perez", team: "Red Bull", car: "RB21", nationality: "Mexico" },
+    { name: "Charles Leclerc", team: "Ferrari", car: "SF-25", nationality: "Monaco" },
+    { name: "Lewis Hamilton", team: "Ferrari", car: "SF-25", nationality: "UK" },
+    { name: "George Russell", team: "Mercedes", car: "W16", nationality: "UK" },
+    { name: "Kimi Antonelli", team: "Mercedes", car: "W16", nationality: "Italy" },
+    { name: "Lando Norris", team: "McLaren", car: "MCL39", nationality: "UK" },
+    { name: "Oscar Piastri", team: "McLaren", car: "MCL39", nationality: "Australia" },
+    { name: "Fernando Alonso", team: "Aston Martin", car: "AMR25", nationality: "Spain" },
+    { name: "Lance Stroll", team: "Aston Martin", car: "AMR25", nationality: "Canada" },
+    { name: "Yuki Tsunoda", team: "Racing Bulls", car: "RB25", nationality: "Japan" },
+    { name: "Liam Lawson", team: "Racing Bulls", car: "RB25", nationality: "New Zealand" },
+    { name: "Carlos Sainz", team: "Williams", car: "FW47", nationality: "Spain" },
+    { name: "Alex Albon", team: "Williams", car: "FW47", nationality: "Thailand" },
+    { name: "Esteban Ocon", team: "Haas", car: "VF-25", nationality: "France" },
+    { name: "Oliver Bearman", team: "Haas", car: "VF-25", nationality: "UK" },
+    { name: "Pierre Gasly", team: "Alpine", car: "A524", nationality: "France" },
+    { name: "Jack Doohan", team: "Alpine", car: "A524", nationality: "Australia" },
+    { name: "Nico Hulkenberg", team: "Kick Sauber", car: "C45", nationality: "Germany" },
+    { name: "Gabriel Bortoleto", team: "Kick Sauber", car: "C45", nationality: "Brazil" },
+    { name: "Valtteri Bottas", team: "Cadillac", car: "Caddy 1", nationality: "Finland" },
+    { name: "Santino Ferrucci", team: "Cadillac", car: "Caddy 1", nationality: "USA" },
+    { name: "Isack Hadjar", team: "Red Bull Academy", car: "RB24 Dev", nationality: "France" },
+    { name: "Theo Pourchaire", team: "Sauber Academy", car: "C45 Dev", nationality: "France" },
+    { name: "Frederik Vesti", team: "Mercedes Reserve", car: "W16 Dev", nationality: "Denmark" },
+    { name: "Felipe Drugovich", team: "Aston Martin Reserve", car: "AMR25 Dev", nationality: "Brazil" },
+    { name: "Zane Maloney", team: "Red Bull Junior", car: "RB24 Dev", nationality: "Barbados" },
+    { name: "Colton Herta", team: "Cadillac", car: "Caddy 1", nationality: "USA" },
+    { name: "Nyck de Vries", team: "Free Agent", car: "TBD", nationality: "Netherlands" },
+    { name: "Mick Schumacher", team: "Reserve", car: "TBD", nationality: "Germany" },
+  ];
 
-// Function to display drivers in table
-function displayDrivers(list) {
-  const tbody = document.querySelector('#driversTable tbody');
-  tbody.innerHTML = '';
-  list.forEach(d => {
-    const row = document.createElement('tr');
-    row.innerHTML = `<td>${d.name}</td><td>${d.team}</td><td>${d.number}</td><td>${d.nationality}</td>`;
-    tbody.appendChild(row);
+  function createCard(driver) {
+    return `
+      <div class="card">
+        <img src="https://via.placeholder.com/280x180.png?text=${encodeURIComponent(driver.car)}" alt="${driver.car}" />
+        <div class="card-content">
+          <h3>${driver.name}</h3>
+          <p><strong>Team:</strong> ${driver.team}</p>
+          <p><strong>Car Model:</strong> ${driver.car}</p>
+          <p><strong>Nationality:</strong> ${driver.nationality}</p>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderDrivers(filter = "") {
+    const container = document.getElementById("driverCards");
+    container.innerHTML = "";
+
+    const filtered = drivers.filter(d =>
+      d.name.toLowerCase().includes(filter) ||
+      d.team.toLowerCase().includes(filter)
+    );
+
+    filtered.forEach(driver => {
+      container.innerHTML += createCard(driver);
+    });
+  }
+
+  document.getElementById("searchInput").addEventListener("input", (e) => {
+    renderDrivers(e.target.value.toLowerCase());
   });
-}
 
-// Filter logic
-document.getElementById('driverSearch').addEventListener('input', (e) => {
-  const query = e.target.value.toLowerCase();
-  const filtered = drivers.filter(d =>
-    d.name.toLowerCase().includes(query) ||
-    d.team.toLowerCase().includes(query)
-  );
-  displayDrivers(filtered);
-});
-
-// Initial display
-displayDrivers(drivers);
+  // Initial load
+  renderDrivers();
 </script>
 
 </body>
