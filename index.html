@@ -1,260 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Marvel Movies Dashboard</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #101820;
-      color: #fff;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Marvel Movies Dashboard</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #121212;
+    color: #eee;
+  }
+  header {
+    background: #d32f2f;
+    text-align: center;
+    padding: 1.5rem 0;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  .movies-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 1.5rem;
+    padding: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .movie-card {
+    background: #1e1e1e;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 0 10px #8b0000aa;
+    transition: transform 0.2s ease;
+  }
+  .movie-card:hover {
+    transform: scale(1.05);
+  }
+  .movie-poster {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+  }
+  .movie-info {
+    padding: 1rem;
+  }
+  .movie-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+  .movie-details {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #ccc;
+  }
 
-    header {
-      padding: 20px;
-      text-align: center;
-      background-color: #e23636;
-      color: white;
-    }
+  /* Modal Styles */
+  .modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 1rem;
+  }
+  .modal-content {
+    background: #222;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 0 20px #d32f2f;
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #444;
+  }
+  .modal-header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+  }
+  .close-btn {
+    cursor: pointer;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #d32f2f;
+    user-select: none;
+  }
+  .modal-body {
+    padding: 1.5rem;
+  }
+  .character {
+    background: #2a2a2a;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+  }
+  .character-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+  .character-powers {
+    font-size: 0.9rem;
+    color: #ccc;
+  }
 
-    h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-
-    .movie-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-
-    .movie-card {
-      background-color: #1c1c2e;
-      border-radius: 10px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .movie-card:hover {
-      transform: scale(1.05);
-    }
-
+  @media (max-width: 400px) {
     .movie-poster {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
+      height: 250px;
     }
-
-    .movie-info {
-      padding: 15px;
-    }
-
-    .movie-title {
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-
-    .movie-details {
-      font-size: 0.9rem;
-      color: #ccc;
-      margin-top: 5px;
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-
-    .modal-content {
-      background-color: #2b2b3c;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 600px;
-      width: 90%;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .modal-header h2 {
-      font-size: 1.4rem;
-    }
-
-    .close-btn {
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    .character {
-      margin-top: 15px;
-      background-color: #383854;
-      padding: 10px;
-      border-radius: 8px;
-    }
-
-    .character-name {
-      font-weight: bold;
-    }
-
-    .character-powers {
-      font-size: 0.9rem;
-      color: #ddd;
-      margin-top: 5px;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>Marvel Movies Dashboard</h1>
-  </header>
+<header>Marvel Movies Dashboard</header>
 
-  <div class="movie-grid" id="movieGrid">
-    <!-- Cards will be inserted here -->
-  </div>
+<div class="movies-container" id="moviesContainer"></div>
 
-  <!-- Modal -->
-  <div class="modal" id="movieModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 id="modalMovieTitle">Movie Title</h2>
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-      </div>
-      <div id="modalCharacters">
-        <!-- Characters injected here -->
-      </div>
+<!-- Modal -->
+<div class="modal" id="movieModal" aria-hidden="true">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-header">
+      <h2 id="modalTitle">Movie Title</h2>
+      <span class="close-btn" id="closeModalBtn" aria-label="Close modal">&times;</span>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Characters info goes here -->
     </div>
   </div>
+</div>
 
-  <script>
-    const movies = [
-      {
-        title: "Avengers: Endgame",
-        year: 2019,
-        collection: "$2.798 billion",
-        poster: "https://i.imgur.com/2BhF1FU.jpg",
-        characters: [
-          {
-            name: "Iron Man",
-            powers: "Genius intellect, powered armor suit, repulsor blasts, flight."
-          },
-          {
-            name: "Thor",
-            powers: "God of Thunder, super strength, Mjolnir and Stormbreaker."
-          }
-        ]
-      },
-      {
-        title: "Spider-Man: No Way Home",
-        year: 2021,
-        collection: "$1.921 billion",
-        poster: "https://i.imgur.com/s1FQ6aU.jpg",
-        characters: [
-          {
-            name: "Spider-Man (Peter Parker)",
-            powers: "Wall-crawling, super strength, spider-sense, web-shooting."
-          },
-          {
-            name: "Doctor Strange",
-            powers: "Mastery of mystic arts, teleportation, time manipulation."
-          }
-        ]
-      },
-      {
-        title: "Black Panther",
-        year: 2018,
-        collection: "$1.347 billion",
-        poster: "https://i.imgur.com/pkeYkXD.jpg",
-        characters: [
-          {
-            name: "Black Panther (T’Challa)",
-            powers: "Enhanced strength and agility, vibranium suit, expert combat skills."
-          },
-          {
-            name: "Shuri",
-            powers: "Genius inventor, technological expertise, vibranium weapons."
-          }
-        ]
-      },
-      {
-        title: "Guardians of the Galaxy",
-        year: 2014,
-        collection: "$773 million",
-        poster: "https://i.imgur.com/M8HhNjG.jpg",
-        characters: [
-          {
-            name: "Star-Lord",
-            powers: "Skilled pilot and marksman, elemental guns, part-Celestial."
-          },
-          {
-            name: "Groot",
-            powers: "Regeneration, strength, ability to extend limbs."
-          }
-        ]
+<script>
+  const movies = [
+    {
+      title: "Avengers: Endgame",
+      year: 2019,
+      collection: "$2.798B",
+      poster: "https://i.imgur.com/2BhF1FU.jpg",
+      characters: [
+        { name: "Iron Man", powers: "Genius intellect, powered armor suit, repulsor blasts, flight." },
+        { name: "Thor", powers: "God of Thunder, super strength, Mjolnir and Stormbreaker." }
+      ]
+    },
+    {
+      title: "Spider-Man: No Way Home",
+      year: 2021,
+      collection: "$1.921B",
+      poster: "https://i.imgur.com/s1FQ6aU.jpg",
+      characters: [
+        { name: "Spider-Man (Peter Parker)", powers: "Wall-crawling, super strength, spider-sense, web-shooting." },
+        { name: "Doctor Strange", powers: "Mastery of mystic arts, teleportation, time manipulation." }
+      ]
+    },
+    {
+      title: "Black Panther",
+      year: 2018,
+      collection: "$1.347B",
+      poster: "https://i.imgur.com/pkeYkXD.jpg",
+      characters: [
+        { name: "Black Panther (T’Challa)", powers: "Enhanced strength, agility, vibranium suit, expert combat skills." },
+        { name: "Shuri", powers: "Genius inventor, technological expertise, vibranium weapons." }
+      ]
+    },
+    {
+      title: "Guardians of the Galaxy",
+      year: 2014,
+      collection: "$773M",
+      poster: "https://i.imgur.com/M8HhNjG.jpg",
+      characters: [
+        { name: "Star-Lord", powers: "Skilled pilot and marksman, elemental guns, part-Celestial." },
+        { name: "Groot", powers: "Regeneration, strength, ability to extend limbs." }
+      ]
+    }
+  ];
+
+  const container = document.getElementById('moviesContainer');
+  const modal = document.getElementById('movieModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody = document.getElementById('modalBody');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+
+  function createMovieCard(movie, index) {
+    const card = document.createElement('div');
+    card.className = 'movie-card';
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-pressed', 'false');
+    card.setAttribute('aria-label', `${movie.title}, released in ${movie.year}, box office collection ${movie.collection}`);
+    card.innerHTML = `
+      <img class="movie-poster" src="${movie.poster}" alt="Poster of ${movie.title}">
+      <div class="movie-info">
+        <div class="movie-title">${movie.title}</div>
+        <div class="movie-details">Year: ${movie.year}</div>
+        <div class="movie-details">Box Office: ${movie.collection}</div>
+      </div>
+    `;
+    card.addEventListener('click', () => openModal(index));
+    card.addEventListener('keypress', e => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openModal(index);
       }
-    ];
+    });
+    return card;
+  }
 
-    const movieGrid = document.getElementById("movieGrid");
-    const movieModal = document.getElementById("movieModal");
-    const modalMovieTitle = document.getElementById("modalMovieTitle");
-    const modalCharacters = document.getElementById("modalCharacters");
+  function openModal(index) {
+    const movie = movies[index];
+    modalTitle.textContent = movie.title;
+    modalBody.innerHTML = '';
+    movie.characters.forEach(c => {
+      const charDiv = document.createElement('div');
+      charDiv.className = 'character';
+      charDiv.innerHTML = `
+        <div class="character-name">${c.name}</div>
+        <div class="character-powers">${c.powers}</div>
+      `;
+      modalBody.appendChild(charDiv);
+    });
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+    closeModalBtn.focus();
+  }
 
-    function renderMovies() {
-      movies.forEach((movie, index) => {
-        const card = document.createElement("div");
-        card.className = "movie-card";
-        card.onclick = () => openModal(index);
-        card.innerHTML = `
-          <img src="${movie.poster}" class="movie-poster" alt="${movie.title}">
-          <div class="movie-info">
-            <div class="movie-title">${movie.title}</div>
-            <div class="movie-details">Year: ${movie.year}</div>
-            <div class="movie-details">Collection: ${movie.collection}</div>
-          </div>
-        `;
-        movieGrid.appendChild(card);
-      });
-    }
+  function closeModal() {
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+  }
 
-    function openModal(index) {
-      const movie = movies[index];
-      modalMovieTitle.textContent = movie.title;
-      modalCharacters.innerHTML = '';
-      movie.characters.forEach(character => {
-        const div = document.createElement("div");
-        div.className = "character";
-        div.innerHTML = `
-          <div class="character-name">${character.name}</div>
-          <div class="character-powers">${character.powers}</div>
-        `;
-        modalCharacters.appendChild(div);
-      });
-      movieModal.style.display = "flex";
-    }
+  closeModalBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => {
+    if(e.target === modal) closeModal();
+  });
+  window.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && modal.style.display === 'flex') closeModal();
+  });
 
-    function closeModal() {
-      movieModal.style.display = "none";
-    }
+  // Render all movies on page load
+  movies.forEach((movie, i) => {
+    container.appendChild(createMovieCard(movie, i));
+  });
+</script>
 
-    // Initialize
-    renderMovies();
-  </script>
 </body>
 </html>
