@@ -3,132 +3,377 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Marvel Characters Dashboard</title>
+<title>3D Models & Characters Dashboard</title>
 <style>
+  /* Reset */
+  * {
+    box-sizing: border-box;
+  }
   body {
-    margin: 0; padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #0d1117;
-    color: #c9d1d9;
+    margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f7fa;
+    color: #333;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
   }
+
   header {
-    background-color: #e63946;
-    padding: 1.5rem 0;
+    background-color: #2d89ef;
+    color: white;
+    padding: 1rem 1.5rem;
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
-    color: #fff;
-    letter-spacing: 1.5px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
   }
+
   main {
+    flex: 1;
+    padding: 1.5rem;
     max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    margin: 0 auto;
+    width: 100%;
   }
-  .partners-grid {
+
+  /* Search and Filters */
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .controls > * {
+    flex: 1 1 200px;
+    max-width: 300px;
+  }
+  input[type="search"], select {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s;
+  }
+  input[type="search"]:focus, select:focus {
+    border-color: #2d89ef;
+    outline: none;
+  }
+
+  /* Grid */
+  .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
     gap: 1.5rem;
   }
-  .partner-card {
-    background-color: #161b22;
+
+  /* Model Card */
+  .model-card {
+    background: white;
     border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 0 15px #e63946aa;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    cursor: default;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.12);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
   }
-  .partner-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 0 20px #e63946ff;
+  .model-card:hover {
+    box-shadow: 0 6px 18px rgba(45,137,239,0.4);
   }
-  .partner-name {
+
+  .thumbnail {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .model-info {
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .model-name {
     font-weight: 700;
-    font-size: 1.4rem;
-    color: #fca311;
-    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    margin-bottom: 0.3rem;
   }
-  .partner-movie {
-    font-style: italic;
-    color: #8a959e;
+  .model-meta {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.8rem;
+  }
+  .associated-character {
+    margin-top: auto;
+    font-size: 0.95rem;
+    color: #2d89ef;
+    font-weight: 600;
+  }
+
+  /* Modal */
+  .modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    z-index: 999;
+  }
+  .modal.active {
+    display: flex;
+  }
+  .modal-content {
+    background: white;
+    max-width: 600px;
+    width: 100%;
+    border-radius: 12px;
+    overflow-y: auto;
+    max-height: 90vh;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #eee;
+  }
+  .modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  .close-btn {
+    cursor: pointer;
+    font-size: 1.5rem;
+    border: none;
+    background: none;
+    color: #2d89ef;
+    font-weight: 700;
+  }
+  .modal-body {
+    padding: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #444;
+  }
+  .character-name {
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+    color: #2d89ef;
+  }
+  .character-powers, .character-description {
     margin-bottom: 1rem;
   }
-  .partner-powers {
-    font-size: 1rem;
-    line-height: 1.4;
-    color: #dbe9ee;
-  }
-  @media (max-width: 400px) {
-    .partner-card {
-      padding: 1rem;
+
+  @media (max-width: 480px) {
+    .controls {
+      flex-direction: column;
     }
   }
 </style>
 </head>
 <body>
 
-<header>Marvel Characters & Their Powers</header>
+<header>3D Models & Characters Dashboard</header>
 
 <main>
-  <div class="partners-grid" id="partnersGrid"></div>
+  <div class="controls">
+    <input type="search" id="searchInput" placeholder="Search by model or character name..." aria-label="Search models and characters" />
+    <select id="typeFilter" aria-label="Filter by model type">
+      <option value="">All Types</option>
+      <option value="Vehicle">Vehicle</option>
+      <option value="Creature">Creature</option>
+      <option value="Character">Character</option>
+      <option value="Environment">Environment</option>
+    </select>
+    <select id="categoryFilter" aria-label="Filter by model category">
+      <option value="">All Categories</option>
+      <option value="Hero">Hero</option>
+      <option value="Villain">Villain</option>
+      <option value="Neutral">Neutral</option>
+    </select>
+  </div>
+
+  <div class="grid" id="modelsGrid" aria-live="polite" aria-relevant="additions removals">
+    <!-- Cards inserted here -->
+  </div>
 </main>
 
+<!-- Modal for Character Details -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">Character Name</h2>
+      <button class="close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Character details -->
+    </div>
+  </div>
+</div>
+
 <script>
-  const characters = [
+  // Sample data
+  const models = [
     {
-      name: "Iron Man (Tony Stark)",
-      movie: "Avengers: Endgame",
-      powers: "Genius intellect, powered armor suit, repulsor blasts, flight."
+      id: 1,
+      name: "Iron Man Mark L",
+      type: "Character",
+      category: "Hero",
+      thumbnail: "https://i.imgur.com/KX7DWxG.jpg",
+      character: {
+        name: "Iron Man",
+        powers: "Powered armor suit with advanced weaponry, flight, AI support.",
+        description: "Tony Stark’s high-tech suit grants him super strength and flight."
+      }
     },
     {
-      name: "Thor",
-      movie: "Avengers: Endgame",
-      powers: "God of Thunder, super strength, Mjolnir and Stormbreaker."
+      id: 2,
+      name: "Spider-Man Suit",
+      type: "Character",
+      category: "Hero",
+      thumbnail: "https://i.imgur.com/KNMk2aZ.jpg",
+      character: {
+        name: "Spider-Man",
+        powers: "Wall-crawling, spider-sense, enhanced agility and strength.",
+        description: "Peter Parker’s suit enhances his natural spider powers."
+      }
     },
     {
-      name: "Spider-Man (Peter Parker)",
-      movie: "Spider-Man: No Way Home",
-      powers: "Wall-crawling, super strength, spider-sense, web-shooting."
+      id: 3,
+      name: "Chitauri Tank",
+      type: "Vehicle",
+      category: "Villain",
+      thumbnail: "https://i.imgur.com/3Cq5Cmn.jpg",
+      character: {
+        name: "Chitauri",
+        powers: "Alien war machines used during the invasion of Earth.",
+        description: "Powerful alien technology employed by Thanos' forces."
+      }
     },
     {
-      name: "Doctor Strange",
-      movie: "Spider-Man: No Way Home",
-      powers: "Mastery of mystic arts, teleportation, time manipulation."
+      id: 4,
+      name: "Hulkbuster Armor",
+      type: "Character",
+      category: "Hero",
+      thumbnail: "https://i.imgur.com/B8JGmji.jpg",
+      character: {
+        name: "Iron Man (Hulkbuster)",
+        powers: "Massive armor suit designed to contain the Hulk, enhanced strength.",
+        description: "Specialized armor to battle large threats."
+      }
     },
     {
-      name: "Black Panther (T’Challa)",
-      movie: "Black Panther",
-      powers: "Enhanced strength and agility, vibranium suit, expert combat skills."
-    },
-    {
-      name: "Shuri",
-      movie: "Black Panther",
-      powers: "Genius inventor, technological expertise, vibranium weapons."
-    },
-    {
-      name: "Star-Lord",
-      movie: "Guardians of the Galaxy",
-      powers: "Skilled pilot and marksman, elemental guns, part-Celestial."
-    },
-    {
-      name: "Groot",
-      movie: "Guardians of the Galaxy",
-      powers: "Regeneration, strength, ability to extend limbs."
+      id: 5,
+      name: "Sakaar Creature",
+      type: "Creature",
+      category: "Neutral",
+      thumbnail: "https://i.imgur.com/6lc4oRi.jpg",
+      character: {
+        name: "Sakaar Beast",
+        powers: "Enormous strength and durability, aggressive nature.",
+        description: "A powerful creature native to the planet Sakaar."
+      }
     }
   ];
 
-  const grid = document.getElementById('partnersGrid');
+  const grid = document.getElementById('modelsGrid');
+  const searchInput = document.getElementById('searchInput');
+  const typeFilter = document.getElementById('typeFilter');
+  const categoryFilter = document.getElementById('categoryFilter');
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody = document.getElementById('modalBody');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
 
-  characters.forEach(char => {
-    const card = document.createElement('div');
-    card.className = 'partner-card';
-    card.innerHTML = `
-      <div class="partner-name">${char.name}</div>
-      <div class="partner-movie">${char.movie}</div>
-      <div class="partner-powers">${char.powers}</div>
+  // Render cards based on filtered data
+  function renderCards(data) {
+    grid.innerHTML = '';
+    if (data.length === 0) {
+      grid.innerHTML = '<p>No models found matching the criteria.</p>';
+      return;
+    }
+    data.forEach(model => {
+      const card = document.createElement('article');
+      card.className = 'model-card';
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-pressed', 'false');
+      card.innerHTML = `
+        <img src="${model.thumbnail}" alt="Thumbnail of ${model.name}" class="thumbnail" />
+        <div class="model-info">
+          <div class="model-name">${model.name}</div>
+          <div class="model-meta"><strong>Type:</strong> ${model.type} | <strong>Category:</strong> ${model.category}</div>
+          <div class="associated-character">Character: ${model.character.name}</div>
+        </div>
+      `;
+      card.addEventListener('click', () => openModal(model.character));
+      card.addEventListener('keypress', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openModal(model.character);
+        }
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  // Filter logic
+  function filterModels() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const selectedType = typeFilter.value;
+    const selectedCategory = categoryFilter.value;
+
+    const filtered = models.filter(model => {
+      const matchSearch =
+        model.name.toLowerCase().includes(searchTerm) ||
+        model.character.name.toLowerCase().includes(searchTerm);
+
+      const matchType = selectedType ? model.type === selectedType : true;
+      const matchCategory = selectedCategory ? model.category === selectedCategory : true;
+
+      return matchSearch && matchType && matchCategory;
+    });
+
+    renderCards(filtered);
+  }
+
+  // Modal functions
+  function openModal(character) {
+    modalTitle.textContent = character.name;
+    modalBody.innerHTML = `
+      <div class="character-powers"><strong>Abilities / Powers:</strong> ${character.powers}</div>
+      <div class="character-description"><strong>Description:</strong> ${character.description}</div>
     `;
-    grid.appendChild(card);
+    modal.classList.add('active');
+    modal.focus();
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+  }
+
+  // Event listeners
+  searchInput.addEventListener('input', filterModels);
+  typeFilter.addEventListener('change', filterModels);
+  categoryFilter.addEventListener('change', filterModels);
+  modalCloseBtn.addEventListener('click', closeModal);
+
+  // Close modal on outside click or Esc
+  modal.addEventListener('click', e => {
+    if (e.target === modal) closeModal();
   });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+
+  // Initial render
+  renderCards(models);
 </script>
 
 </body>
