@@ -2,35 +2,79 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Formula 1 Data Dashboard</title>
+  <title>Formula 1 Dashboard</title>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       color: #fff;
+      display: flex;
+      height: 100vh;
     }
 
-    header {
-      background: linear-gradient(90deg, #ff512f, #dd2476);
-      padding: 20px;
+    /* Sidebar */
+    .sidebar {
+      width: 300px;
+      background: linear-gradient(to bottom, #1f4037, #99f2c8);
+      padding: 30px 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .sidebar h2 {
       text-align: center;
-      font-size: 2em;
-      font-weight: bold;
-      letter-spacing: 2px;
+      color: #000;
+      margin-bottom: 20px;
     }
 
-    .container {
-      padding: 30px;
-      max-width: 1000px;
-      margin: auto;
+    .sidebar form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar input, .sidebar button {
+      margin-bottom: 15px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    .sidebar input {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+
+    .sidebar button {
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .sidebar button:hover {
+      opacity: 0.9;
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
+
+    .main-content h1 {
+      color: #f1c40f;
+      margin-bottom: 30px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 30px;
-      background-color: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.05);
       border-radius: 10px;
       overflow: hidden;
     }
@@ -43,58 +87,52 @@
 
     th {
       background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    input, button {
-      padding: 10px;
-      margin: 8px 0;
-      width: 100%;
-      border: none;
-      border-radius: 5px;
-    }
-
-    input {
-      background-color: #eee;
-      color: #333;
-    }
-
-    button {
-      background: linear-gradient(to right, #11998e, #38ef7d);
       color: #fff;
-      font-weight: bold;
-      cursor: pointer;
     }
 
-    button:hover {
-      opacity: 0.9;
+    td {
+      color: #e0e0e0;
     }
 
-    .form-section {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 20px;
-      border-radius: 10px;
-    }
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
 
-    h2 {
-      margin-top: 0;
-      color: #f1c40f;
+      .sidebar {
+        width: 100%;
+        padding: 20px;
+      }
+
+      .main-content {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    Formula 1 Data Dashboard
-  </header>
 
-  <div class="container">
-    <h2>Current Drivers</h2>
+  <div class="sidebar">
+    <div>
+      <h2>New Player Login</h2>
+      <form id="loginForm">
+        <input type="text" id="playerId" placeholder="Player ID" required>
+        <input type="text" id="carModel" placeholder="Car Model" required>
+        <input type="text" id="teamName" placeholder="Team Name" required>
+        <button type="submit">Add Player</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <h1>Formula 1 Drivers</h1>
     <table id="playersTable">
       <thead>
         <tr>
           <th>ID</th>
           <th>Driver Name</th>
           <th>Car Model</th>
-          <th>Team Name</th>
+          <th>Team</th>
         </tr>
       </thead>
       <tbody>
@@ -109,46 +147,35 @@
         <tr><td>9</td><td>Fernando Alonso</td><td>AMR24</td><td>Aston Martin</td></tr>
       </tbody>
     </table>
-
-    <div class="form-section">
-      <h2>Register New Driver</h2>
-      <form id="newPlayerForm">
-        <input type="text" id="newId" placeholder="Enter ID" required />
-        <input type="text" id="newName" placeholder="Enter Driver Name" required />
-        <input type="text" id="newCar" placeholder="Enter Car Model" required />
-        <input type="text" id="newTeam" placeholder="Enter Team Name" required />
-        <button type="submit">Add Driver</button>
-      </form>
-    </div>
   </div>
 
   <script>
-    document.getElementById('newPlayerForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+    const form = document.getElementById('loginForm');
+    const table = document.getElementById('playersTable').getElementsByTagName('tbody')[0];
 
-      const id = document.getElementById('newId').value.trim();
-      const name = document.getElementById('newName').value.trim();
-      const car = document.getElementById('newCar').value.trim();
-      const team = document.getElementById('newTeam').value.trim();
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
 
-      if (!id || !name || !car || !team) {
+      const id = document.getElementById('playerId').value.trim();
+      const carModel = document.getElementById('carModel').value.trim();
+      const teamName = document.getElementById('teamName').value.trim();
+
+      if (!id || !carModel || !teamName) {
         alert("Please fill in all fields.");
         return;
       }
 
-      const table = document.getElementById('playersTable').getElementsByTagName('tbody')[0];
       const newRow = table.insertRow();
-
       newRow.innerHTML = `
         <td>${id}</td>
-        <td>${name}</td>
-        <td>${car}</td>
-        <td>${team}</td>
+        <td>New Driver</td>
+        <td>${carModel}</td>
+        <td>${teamName}</td>
       `;
 
-      // Reset the form
-      document.getElementById('newPlayerForm').reset();
+      form.reset();
     });
   </script>
+
 </body>
 </html>
