@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Formula 1 Data Portal</title>
+  <title>Formula 1 Players Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      background: #0b0c10;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0b0c10;
       color: #ffffff;
     }
 
     header {
-      background: #1f2833;
+      background-color: #1f2833;
       padding: 20px;
       text-align: center;
     }
@@ -24,19 +24,20 @@
     }
 
     .container {
+      max-width: 1000px;
+      margin: 20px auto;
       padding: 20px;
-      max-width: 1200px;
-      margin: auto;
     }
 
-    .form-section {
-      background: #1f2833;
+    .form-box {
+      background-color: #1f2833;
       padding: 20px;
+      border-radius: 8px;
       margin-bottom: 30px;
-      border-radius: 10px;
     }
 
-    .form-section h2 {
+    .form-box h2 {
+      margin-bottom: 20px;
       color: #66fcf1;
     }
 
@@ -64,164 +65,141 @@
       font-weight: bold;
       border-radius: 5px;
       cursor: pointer;
+      margin-top: 10px;
     }
 
     .grid {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 20px;
-      justify-content: center;
     }
 
     .card {
-      background: #1f2833;
-      width: 280px;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    }
-
-    .card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-    }
-
-    .card-content {
+      background-color: #1f2833;
       padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
 
-    .card-content h3 {
-      margin-top: 0;
+    .card h3 {
+      margin: 0 0 10px;
       color: #66fcf1;
     }
 
-    .card-content p {
-      margin: 6px 0;
+    .card p {
+      margin: 5px 0;
       color: #c5c6c7;
     }
 
     footer {
       text-align: center;
-      padding: 20px;
-      background: #1f2833;
+      padding: 15px;
+      background-color: #1f2833;
       color: #45a29e;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>Formula 1 2025 - Driver Dashboard</h1>
-</header>
+  <header>
+    <h1>Formula 1 Data Portal - 2025</h1>
+  </header>
 
-<div class="container">
+  <div class="container">
 
-  <section class="form-section">
-    <h2>Login / Register New Player</h2>
-    <div class="form-group">
-      <label for="playerId">Player ID</label>
-      <input type="text" id="playerId" placeholder="e.g., 99" />
-    </div>
-    <div class="form-group">
-      <label for="playerName">Player Name</label>
-      <input type="text" id="playerName" placeholder="e.g., John Doe" />
-    </div>
-    <div class="form-group">
-      <label for="playerTeam">Team</label>
-      <input type="text" id="playerTeam" placeholder="e.g., Red Bull" />
-    </div>
-    <div class="form-group">
-      <label for="playerCar">Car Model</label>
-      <input type="text" id="playerCar" placeholder="e.g., RB21" />
-    </div>
-    <div class="form-group">
-      <label for="playerNationality">Nationality</label>
-      <input type="text" id="playerNationality" placeholder="e.g., UK" />
-    </div>
-    <div class="form-group">
-      <button onclick="addPlayer()">Login Player</button>
-    </div>
-  </section>
+    <section class="form-box">
+      <h2>Register / Login New Player</h2>
+      <div class="form-group">
+        <label for="playerId">Player ID</label>
+        <input type="text" id="playerId" placeholder="e.g. 101" />
+      </div>
+      <div class="form-group">
+        <label for="playerName">Player Name</label>
+        <input type="text" id="playerName" placeholder="e.g. Jane Smith" />
+      </div>
+      <div class="form-group">
+        <label for="playerTeam">Team</label>
+        <input type="text" id="playerTeam" placeholder="e.g. Red Bull" />
+      </div>
+      <div class="form-group">
+        <label for="playerCar">Car Model</label>
+        <input type="text" id="playerCar" placeholder="e.g. RB21" />
+      </div>
+      <div class="form-group">
+        <label for="playerNationality">Nationality</label>
+        <input type="text" id="playerNationality" placeholder="e.g. France" />
+      </div>
+      <div class="form-group">
+        <button onclick="addPlayer()">Add Player</button>
+      </div>
+    </section>
 
-  <h2 style="color: #66fcf1;">Driver Lineup</h2>
-  <div class="grid" id="playerGrid">
-    <!-- Player cards injected here -->
+    <h2 style="color: #66fcf1;">Current Drivers</h2>
+    <div class="grid" id="playerGrid">
+      <!-- Player cards rendered here -->
+    </div>
+
   </div>
 
-</div>
+  <footer>
+    &copy; 2025 Formula 1 Data Portal. All rights reserved.
+  </footer>
 
-<footer>
-  &copy; 2025 Formula 1 Data Portal. All rights reserved.
-</footer>
+  <script>
+    const players = [
+      { id: 1, name: "Max Verstappen", team: "Red Bull", car: "RB21", nationality: "Netherlands" },
+      { id: 2, name: "Lewis Hamilton", team: "Ferrari", car: "SF-25", nationality: "UK" },
+      { id: 3, name: "Lando Norris", team: "McLaren", car: "MCL39", nationality: "UK" },
+      { id: 4, name: "Charles Leclerc", team: "Ferrari", car: "SF-25", nationality: "Monaco" },
+      { id: 5, name: "George Russell", team: "Mercedes", car: "W16", nationality: "UK" },
+      { id: 6, name: "Oscar Piastri", team: "McLaren", car: "MCL39", nationality: "Australia" },
+      { id: 7, name: "Fernando Alonso", team: "Aston Martin", car: "AMR25", nationality: "Spain" },
+      { id: 8, name: "Carlos Sainz", team: "Williams", car: "FW47", nationality: "Spain" },
+      { id: 9, name: "Esteban Ocon", team: "Haas", car: "VF-25", nationality: "France" },
+      { id: 10, name: "Pierre Gasly", team: "Alpine", car: "A524", nationality: "France" }
+    ];
 
-<script>
-  const players = [
-    { id: 1, name: "Max Verstappen", team: "Red Bull", car: "RB21", nationality: "Netherlands" },
-    { id: 2, name: "Lewis Hamilton", team: "Ferrari", car: "SF-25", nationality: "UK" },
-    { id: 3, name: "Charles Leclerc", team: "Ferrari", car: "SF-25", nationality: "Monaco" },
-    { id: 4, name: "George Russell", team: "Mercedes", car: "W16", nationality: "UK" },
-    { id: 5, name: "Lando Norris", team: "McLaren", car: "MCL39", nationality: "UK" },
-    { id: 6, name: "Oscar Piastri", team: "McLaren", car: "MCL39", nationality: "Australia" },
-    { id: 7, name: "Sergio Perez", team: "Red Bull", car: "RB21", nationality: "Mexico" },
-    { id: 8, name: "Fernando Alonso", team: "Aston Martin", car: "AMR25", nationality: "Spain" },
-    { id: 9, name: "Lance Stroll", team: "Aston Martin", car: "AMR25", nationality: "Canada" },
-    { id: 10, name: "Yuki Tsunoda", team: "Racing Bulls", car: "RB25", nationality: "Japan" },
-    { id: 11, name: "Esteban Ocon", team: "Haas", car: "VF-25", nationality: "France" },
-    { id: 12, name: "Carlos Sainz", team: "Williams", car: "FW47", nationality: "Spain" },
-    { id: 13, name: "Pierre Gasly", team: "Alpine", car: "A524", nationality: "France" },
-    { id: 14, name: "Nico Hulkenberg", team: "Sauber", car: "C45", nationality: "Germany" },
-    { id: 15, name: "Jack Doohan", team: "Alpine", car: "A524", nationality: "Australia" }
-  ];
-
-  function renderPlayers() {
-    const grid = document.getElementById('playerGrid');
-    grid.innerHTML = "";
-    players.forEach(p => {
-      grid.innerHTML += `
-        <div class="card">
-          <img src="https://via.placeholder.com/280x160.png?text=${encodeURIComponent(p.car)}" alt="${p.car}" />
-          <div class="card-content">
+    function renderPlayers() {
+      const grid = document.getElementById('playerGrid');
+      grid.innerHTML = '';
+      players.forEach(p => {
+        grid.innerHTML += `
+          <div class="card">
             <h3>${p.name}</h3>
+            <p><strong>ID:</strong> ${p.id}</p>
             <p><strong>Team:</strong> ${p.team}</p>
             <p><strong>Car Model:</strong> ${p.car}</p>
             <p><strong>Nationality:</strong> ${p.nationality}</p>
-            <p><strong>ID:</strong> ${p.id}</p>
           </div>
-        </div>
-      `;
-    });
-  }
-
-  function addPlayer() {
-    const id = document.getElementById('playerId').value.trim();
-    const name = document.getElementById('playerName').value.trim();
-    const team = document.getElementById('playerTeam').value.trim();
-    const car = document.getElementById('playerCar').value.trim();
-    const nationality = document.getElementById('playerNationality').value.trim();
-
-    if (!id || !name || !team || !car || !nationality) {
-      alert("Please fill in all fields.");
-      return;
+        `;
+      });
     }
 
-    players.push({
-      id, name, team, car, nationality
-    });
+    function addPlayer() {
+      const id = document.getElementById('playerId').value.trim();
+      const name = document.getElementById('playerName').value.trim();
+      const team = document.getElementById('playerTeam').value.trim();
+      const car = document.getElementById('playerCar').value.trim();
+      const nationality = document.getElementById('playerNationality').value.trim();
 
+      if (!id || !name || !team || !car || !nationality) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      players.push({ id, name, team, car, nationality });
+      renderPlayers();
+
+      document.getElementById('playerId').value = '';
+      document.getElementById('playerName').value = '';
+      document.getElementById('playerTeam').value = '';
+      document.getElementById('playerCar').value = '';
+      document.getElementById('playerNationality').value = '';
+    }
+
+    // Initial render
     renderPlayers();
-
-    // Clear form
-    document.getElementById('playerId').value = '';
-    document.getElementById('playerName').value = '';
-    document.getElementById('playerTeam').value = '';
-    document.getElementById('playerCar').value = '';
-    document.getElementById('playerNationality').value = '';
-  }
-
-  // Initial render
-  renderPlayers();
-</script>
+  </script>
 
 </body>
 </html>
