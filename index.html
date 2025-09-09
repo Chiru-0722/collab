@@ -5,41 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>3D Models & Characters Dashboard</title>
 <style>
-  /* Reset */
-  * {
+  /* Reset & base */
+  *, *::before, *::after {
     box-sizing: border-box;
   }
   body {
-    margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f5f7fa;
-    color: #333;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    color: #222;
     min-height: 100vh;
-    display: flex; flex-direction: column;
+    display: flex;
+    flex-direction: column;
   }
-
   header {
-    background-color: #2d89ef;
+    background-color: #0066cc;
     color: white;
-    padding: 1rem 1.5rem;
-    text-align: center;
+    padding: 1.25rem 2rem;
     font-size: 1.8rem;
     font-weight: 700;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,102,204,0.3);
   }
-
   main {
-    flex: 1;
-    padding: 1.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    flex-grow: 1;
   }
 
-  /* Search and Filters */
+  /* Controls */
   .controls {
     display: flex;
-    flex-wrap: wrap;
     gap: 1rem;
+    flex-wrap: wrap;
     margin-bottom: 1.5rem;
   }
   .controls > * {
@@ -50,12 +49,12 @@
     width: 100%;
     padding: 0.5rem 0.75rem;
     font-size: 1rem;
-    border: 1.5px solid #ccc;
+    border: 1.8px solid #ccc;
     border-radius: 6px;
     transition: border-color 0.3s;
   }
   input[type="search"]:focus, select:focus {
-    border-color: #2d89ef;
+    border-color: #0066cc;
     outline: none;
   }
 
@@ -66,53 +65,47 @@
     gap: 1.5rem;
   }
 
-  /* Model Card */
-  .model-card {
+  /* Card */
+  .card {
     background: white;
     border-radius: 12px;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.12);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
     cursor: pointer;
     transition: box-shadow 0.3s ease;
-  }
-  .model-card:hover {
-    box-shadow: 0 6px 18px rgba(45,137,239,0.4);
-  }
-
-  .thumbnail {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-  }
-
-  .model-info {
-    padding: 1rem;
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
   }
-
+  .card:hover {
+    box-shadow: 0 6px 20px rgba(0,102,204,0.4);
+  }
+  .card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+  }
+  .card-content {
+    padding: 1rem;
+    flex-grow: 1;
+  }
   .model-name {
     font-weight: 700;
     font-size: 1.25rem;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.4rem;
+    color: #0066cc;
   }
-  .model-meta {
+  .model-info {
     font-size: 0.9rem;
-    color: #666;
+    color: #555;
     margin-bottom: 0.8rem;
   }
-  .associated-character {
-    margin-top: auto;
-    font-size: 0.95rem;
-    color: #2d89ef;
+  .character-name {
     font-weight: 600;
+    color: #004a99;
   }
 
   /* Modal */
-  .modal {
+  .modal-overlay {
     position: fixed;
     inset: 0;
     background-color: rgba(0,0,0,0.7);
@@ -120,57 +113,57 @@
     justify-content: center;
     align-items: center;
     padding: 1rem;
-    z-index: 999;
+    z-index: 1000;
   }
-  .modal.active {
+  .modal-overlay.active {
     display: flex;
   }
-  .modal-content {
+  .modal {
     background: white;
+    border-radius: 12px;
     max-width: 600px;
     width: 100%;
-    border-radius: 12px;
+    max-height: 85vh;
     overflow-y: auto;
-    max-height: 90vh;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    position: relative;
   }
   .modal-header {
-    display: flex;
-    justify-content: space-between;
     padding: 1rem 1.5rem;
-    border-bottom: 1px solid #eee;
-  }
-  .modal-header h2 {
-    margin: 0;
+    border-bottom: 1px solid #ddd;
     font-size: 1.5rem;
-  }
-  .close-btn {
-    cursor: pointer;
-    font-size: 1.5rem;
-    border: none;
-    background: none;
-    color: #2d89ef;
     font-weight: 700;
+    color: #0066cc;
+  }
+  .modal-close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #0066cc;
   }
   .modal-body {
-    padding: 1.5rem;
+    padding: 1rem 1.5rem 2rem;
     font-size: 1rem;
-    line-height: 1.5;
-    color: #444;
+    color: #333;
   }
-  .character-name {
-    font-weight: 700;
-    font-size: 1.3rem;
-    margin-bottom: 0.3rem;
-    color: #2d89ef;
-  }
-  .character-powers, .character-description {
+  .modal-section {
     margin-bottom: 1rem;
   }
+  .modal-section strong {
+    color: #004a99;
+  }
 
-  @media (max-width: 480px) {
-    .controls {
-      flex-direction: column;
+  /* Responsive adjustments */
+  @media (max-width: 400px) {
+    .card img {
+      height: 140px;
+    }
+    main {
+      margin: 1rem;
     }
   }
 </style>
@@ -181,15 +174,15 @@
 
 <main>
   <div class="controls">
-    <input type="search" id="searchInput" placeholder="Search by model or character name..." aria-label="Search models and characters" />
+    <input type="search" id="searchInput" placeholder="Search models or characters..." aria-label="Search models and characters" />
     <select id="typeFilter" aria-label="Filter by model type">
       <option value="">All Types</option>
+      <option value="Character">Character</option>
       <option value="Vehicle">Vehicle</option>
       <option value="Creature">Creature</option>
-      <option value="Character">Character</option>
       <option value="Environment">Environment</option>
     </select>
-    <select id="categoryFilter" aria-label="Filter by model category">
+    <select id="categoryFilter" aria-label="Filter by category">
       <option value="">All Categories</option>
       <option value="Hero">Hero</option>
       <option value="Villain">Villain</option>
@@ -197,26 +190,23 @@
     </select>
   </div>
 
-  <div class="grid" id="modelsGrid" aria-live="polite" aria-relevant="additions removals">
-    <!-- Cards inserted here -->
-  </div>
+  <section class="grid" id="modelsGrid" aria-live="polite" aria-relevant="additions removals">
+    <!-- Cards injected here -->
+  </section>
 </main>
 
-<!-- Modal for Character Details -->
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2 id="modalTitle">Character Name</h2>
-      <button class="close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
-    </div>
+<!-- Modal -->
+<div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+    <header class="modal-header" id="modalTitle">Character Name</header>
     <div class="modal-body" id="modalBody">
-      <!-- Character details -->
+      <!-- Character details here -->
     </div>
   </div>
 </div>
 
 <script>
-  // Sample data
   const models = [
     {
       id: 1,
@@ -287,32 +277,32 @@
   const modal = document.getElementById('modal');
   const modalTitle = document.getElementById('modalTitle');
   const modalBody = document.getElementById('modalBody');
-  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  const modalClose = document.getElementById('modalClose');
 
-  // Render cards based on filtered data
+  // Render cards function
   function renderCards(data) {
     grid.innerHTML = '';
-    if (data.length === 0) {
-      grid.innerHTML = '<p>No models found matching the criteria.</p>';
+    if(data.length === 0) {
+      grid.innerHTML = '<p>No models found matching your criteria.</p>';
       return;
     }
     data.forEach(model => {
       const card = document.createElement('article');
-      card.className = 'model-card';
-      card.setAttribute('tabindex', '0');
+      card.className = 'card';
+      card.tabIndex = 0;
       card.setAttribute('role', 'button');
       card.setAttribute('aria-pressed', 'false');
       card.innerHTML = `
-        <img src="${model.thumbnail}" alt="Thumbnail of ${model.name}" class="thumbnail" />
-        <div class="model-info">
-          <div class="model-name">${model.name}</div>
-          <div class="model-meta"><strong>Type:</strong> ${model.type} | <strong>Category:</strong> ${model.category}</div>
-          <div class="associated-character">Character: ${model.character.name}</div>
+        <img src="${model.thumbnail}" alt="Thumbnail of ${model.name}" />
+        <div class="card-content">
+          <h3 class="model-name">${model.name}</h3>
+          <p class="model-info"><strong>Type:</strong> ${model.type} | <strong>Category:</strong> ${model.category}</p>
+          <p class="character-name">Character: ${model.character.name}</p>
         </div>
       `;
       card.addEventListener('click', () => openModal(model.character));
-      card.addEventListener('keypress', e => {
-        if (e.key === 'Enter' || e.key === ' ') {
+      card.addEventListener('keydown', e => {
+        if(e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           openModal(model.character);
         }
@@ -321,59 +311,53 @@
     });
   }
 
-  // Filter logic
+  // Filter & search
   function filterModels() {
     const searchTerm = searchInput.value.toLowerCase();
     const selectedType = typeFilter.value;
     const selectedCategory = categoryFilter.value;
 
     const filtered = models.filter(model => {
-      const matchSearch =
-        model.name.toLowerCase().includes(searchTerm) ||
-        model.character.name.toLowerCase().includes(searchTerm);
-
-      const matchType = selectedType ? model.type === selectedType : true;
-      const matchCategory = selectedCategory ? model.category === selectedCategory : true;
-
-      return matchSearch && matchType && matchCategory;
+      const matchesSearch = model.name.toLowerCase().includes(searchTerm) || model.character.name.toLowerCase().includes(searchTerm);
+      const matchesType = selectedType ? model.type === selectedType : true;
+      const matchesCategory = selectedCategory ? model.category === selectedCategory : true;
+      return matchesSearch && matchesType && matchesCategory;
     });
 
     renderCards(filtered);
   }
 
-  // Modal functions
+  // Modal open & close
   function openModal(character) {
     modalTitle.textContent = character.name;
     modalBody.innerHTML = `
-      <div class="character-powers"><strong>Abilities / Powers:</strong> ${character.powers}</div>
-      <div class="character-description"><strong>Description:</strong> ${character.description}</div>
+      <div class="modal-section"><strong>Abilities / Powers:</strong> ${character.powers}</div>
+      <div class="modal-section"><strong>Description:</strong> ${character.description}</div>
     `;
     modal.classList.add('active');
     modal.focus();
   }
-
   function closeModal() {
     modal.classList.remove('active');
   }
+
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+
+  // Init render
+  renderCards(models);
 
   // Event listeners
   searchInput.addEventListener('input', filterModels);
   typeFilter.addEventListener('change', filterModels);
   categoryFilter.addEventListener('change', filterModels);
-  modalCloseBtn.addEventListener('click', closeModal);
-
-  // Close modal on outside click or Esc
-  modal.addEventListener('click', e => {
-    if (e.target === modal) closeModal();
-  });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) {
-      closeModal();
-    }
-  });
-
-  // Initial render
-  renderCards(models);
 </script>
 
 </body>
