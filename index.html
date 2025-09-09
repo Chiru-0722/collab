@@ -1,364 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>3D Models & Characters Dashboard</title>
-<style>
-  /* Reset & base */
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f0f2f5;
-    color: #222;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  header {
-    background-color: #0066cc;
-    color: white;
-    padding: 1.25rem 2rem;
-    font-size: 1.8rem;
-    font-weight: 700;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0,102,204,0.3);
-  }
-  main {
-    max-width: 1100px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    flex-grow: 1;
-  }
-
-  /* Controls */
-  .controls {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
-  }
-  .controls > * {
-    flex: 1 1 200px;
-    max-width: 300px;
-  }
-  input[type="search"], select {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    font-size: 1rem;
-    border: 1.8px solid #ccc;
-    border-radius: 6px;
-    transition: border-color 0.3s;
-  }
-  input[type="search"]:focus, select:focus {
-    border-color: #0066cc;
-    outline: none;
-  }
-
-  /* Grid */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-    gap: 1.5rem;
-  }
-
-  /* Card */
-  .card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    overflow: hidden;
-    cursor: pointer;
-    transition: box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-  }
-  .card:hover {
-    box-shadow: 0 6px 20px rgba(0,102,204,0.4);
-  }
-  .card img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-  }
-  .card-content {
-    padding: 1rem;
-    flex-grow: 1;
-  }
-  .model-name {
-    font-weight: 700;
-    font-size: 1.25rem;
-    margin-bottom: 0.4rem;
-    color: #0066cc;
-  }
-  .model-info {
-    font-size: 0.9rem;
-    color: #555;
-    margin-bottom: 0.8rem;
-  }
-  .character-name {
-    font-weight: 600;
-    color: #004a99;
-  }
-
-  /* Modal */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0,0,0,0.7);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    z-index: 1000;
-  }
-  .modal-overlay.active {
-    display: flex;
-  }
-  .modal {
-    background: white;
-    border-radius: 12px;
-    max-width: 600px;
-    width: 100%;
-    max-height: 85vh;
-    overflow-y: auto;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    position: relative;
-  }
-  .modal-header {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid #ddd;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #0066cc;
-  }
-  .modal-close {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    cursor: pointer;
-    color: #0066cc;
-  }
-  .modal-body {
-    padding: 1rem 1.5rem 2rem;
-    font-size: 1rem;
-    color: #333;
-  }
-  .modal-section {
-    margin-bottom: 1rem;
-  }
-  .modal-section strong {
-    color: #004a99;
-  }
-
-  /* Responsive adjustments */
-  @media (max-width: 400px) {
-    .card img {
-      height: 140px;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>3D Models Dashboard</title>
+  <style>
+    /* Base styles */
+    * {
+      box-sizing: border-box;
     }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    header {
+      background-color: #3a6ea5;
+      color: white;
+      padding: 1.2rem 2rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+      text-align: center;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+
     main {
-      margin: 1rem;
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
     }
-  }
-</style>
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .controls > * {
+      flex: 1 1 200px;
+    }
+
+    input[type="search"],
+    select {
+      width: 100%;
+      padding: 0.6rem;
+      font-size: 1rem;
+      border: 1.5px solid #ccc;
+      border-radius: 6px;
+    }
+
+    input[type="search"]:focus,
+    select:focus {
+      border-color: #3a6ea5;
+      outline: none;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .model-name {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #3a6ea5;
+      margin-bottom: 0.3rem;
+    }
+
+    .model-meta {
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+
+    .character-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #222;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .modal h2 {
+      margin-top: 0;
+      color: #3a6ea5;
+    }
+
+    .modal .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #888;
+      cursor: pointer;
+    }
+
+    .modal-content p {
+      margin: 0.5rem 0;
+    }
+
+    @media (max-width: 480px) {
+      .controls {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<header>3D Models & Characters Dashboard</header>
-
-<main>
-  <div class="controls">
-    <input type="search" id="searchInput" placeholder="Search models or characters..." aria-label="Search models and characters" />
-    <select id="typeFilter" aria-label="Filter by model type">
-      <option value="">All Types</option>
-      <option value="Character">Character</option>
-      <option value="Vehicle">Vehicle</option>
-      <option value="Creature">Creature</option>
-      <option value="Environment">Environment</option>
-    </select>
-    <select id="categoryFilter" aria-label="Filter by category">
-      <option value="">All Categories</option>
-      <option value="Hero">Hero</option>
-      <option value="Villain">Villain</option>
-      <option value="Neutral">Neutral</option>
-    </select>
-  </div>
-
-  <section class="grid" id="modelsGrid" aria-live="polite" aria-relevant="additions removals">
-    <!-- Cards injected here -->
-  </section>
-</main>
-
-<!-- Modal -->
-<div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
-  <div class="modal">
-    <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
-    <header class="modal-header" id="modalTitle">Character Name</header>
-    <div class="modal-body" id="modalBody">
-      <!-- Character details here -->
-    </div>
-  </div>
-</div>
-
-<script>
-  const models = [
-    {
-      id: 1,
-      name: "Iron Man Mark L",
-      type: "Character",
-      category: "Hero",
-      thumbnail: "https://i.imgur.com/KX7DWxG.jpg",
-      character: {
-        name: "Iron Man",
-        powers: "Powered armor suit with advanced weaponry, flight, AI support.",
-        description: "Tony Stark’s high-tech suit grants him super strength and flight."
-      }
-    },
-    {
-      id: 2,
-      name: "Spider-Man Suit",
-      type: "Character",
-      category: "Hero",
-      thumbnail: "https://i.imgur.com/KNMk2aZ.jpg",
-      character: {
-        name: "Spider-Man",
-        powers: "Wall-crawling, spider-sense, enhanced agility and strength.",
-        description: "Peter Parker’s suit enhances his natural spider powers."
-      }
-    },
-    {
-      id: 3,
-      name: "Chitauri Tank",
-      type: "Vehicle",
-      category: "Villain",
-      thumbnail: "https://i.imgur.com/3Cq5Cmn.jpg",
-      character: {
-        name: "Chitauri",
-        powers: "Alien war machines used during the invasion of Earth.",
-        description: "Powerful alien technology employed by Thanos' forces."
-      }
-    },
-    {
-      id: 4,
-      name: "Hulkbuster Armor",
-      type: "Character",
-      category: "Hero",
-      thumbnail: "https://i.imgur.com/B8JGmji.jpg",
-      character: {
-        name: "Iron Man (Hulkbuster)",
-        powers: "Massive armor suit designed to contain the Hulk, enhanced strength.",
-        description: "Specialized armor to battle large threats."
-      }
-    },
-    {
-      id: 5,
-      name: "Sakaar Creature",
-      type: "Creature",
-      category: "Neutral",
-      thumbnail: "https://i.imgur.com/6lc4oRi.jpg",
-      character: {
-        name: "Sakaar Beast",
-        powers: "Enormous strength and durability, aggressive nature.",
-        description: "A powerful creature native to the planet Sakaar."
-      }
-    }
-  ];
-
-  const grid = document.getElementById('modelsGrid');
-  const searchInput = document.getElementById('searchInput');
-  const typeFilter = document.getElementById('typeFilter');
-  const categoryFilter = document.getElementById('categoryFilter');
-  const modal = document.getElementById('modal');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalBody = document.getElementById('modalBody');
-  const modalClose = document.getElementById('modalClose');
-
-  // Render cards function
-  function renderCards(data) {
-    grid.innerHTML = '';
-    if(data.length === 0) {
-      grid.innerHTML = '<p>No models found matching your criteria.</p>';
-      return;
-    }
-    data.forEach(model => {
-      const card = document.createElement('article');
-      card.className = 'card';
-      card.tabIndex = 0;
-      card.setAttribute('role', 'button');
-      card.setAttribute('aria-pressed', 'false');
-      card.innerHTML = `
-        <img src="${model.thumbnail}" alt="Thumbnail of ${model.name}" />
-        <div class="card-content">
-          <h3 class="model-name">${model.name}</h3>
-          <p class="model-info"><strong>Type:</strong> ${model.type} | <strong>Category:</strong> ${model.category}</p>
-          <p class="character-name">Character: ${model.character.name}</p>
-        </div>
-      `;
-      card.addEventListener('click', () => openModal(model.character));
-      card.addEventListener('keydown', e => {
-        if(e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openModal(model.character);
-        }
-      });
-      grid.appendChild(card);
-    });
-  }
-
-  // Filter & search
-  function filterModels() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const selectedType = typeFilter.value;
-    const selectedCategory = categoryFilter.value;
-
-    const filtered = models.filter(model => {
-      const matchesSearch = model.name.toLowerCase().includes(searchTerm) || model.character.name.toLowerCase().includes(searchTerm);
-      const matchesType = selectedType ? model.type === selectedType : true;
-      const matchesCategory = selectedCategory ? model.category === selectedCategory : true;
-      return matchesSearch && matchesType && matchesCategory;
-    });
-
-    renderCards(filtered);
-  }
-
-  // Modal open & close
-  function openModal(character) {
-    modalTitle.textContent = character.name;
-    modalBody.innerHTML = `
-      <div class="modal-section"><strong>Abilities / Powers:</strong> ${character.powers}</div>
-      <div class="modal-section"><strong>Description:</strong> ${character.description}</div>
-    `;
-    modal.classList.add('active');
-    modal.focus();
-  }
-  function closeModal() {
-    modal.classList.remove('active');
-  }
-
-  modalClose.addEventListener('click', closeModal);
-  modal.addEventListener('click', e => {
-    if (e.target === modal) closeModal();
-  });
-  document.addEventListener('keydown', e => {
-    if(e.key === 'Escape' && modal.classList.contains('active')) {
-      closeModal();
-    }
-  });
-
-  // Init render
-  renderCards(models);
-
-  // Event listeners
-  searchInput.addEventListener('input', filterModels);
-  typeFilter.addEventListener('change', filterModels);
-  categoryFilter.addEventListener('change', filterModels);
-</script>
-
-</body>
-</html>
