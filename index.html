@@ -5,43 +5,53 @@
   <title>Formula 1 Driver Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --main-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      --accent-gradient: linear-gradient(to right, #ff416c, #ff4b2b);
+      --text-light: #ffffff;
+      --text-muted: #cccccc;
     }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #0b0c10;
-      color: #ffffff;
+      background: var(--main-gradient);
+      color: var(--text-light);
     }
 
     header {
-      background-color: #1f2833;
-      padding: 20px;
+      padding: 30px 20px;
       text-align: center;
+      background: var(--accent-gradient);
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
 
     header h1 {
       margin: 0;
-      color: #66fcf1;
+      font-size: 2.2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     .container {
-      max-width: 1000px;
-      margin: 20px auto;
+      max-width: 1100px;
+      margin: 30px auto;
       padding: 20px;
     }
 
-    .form-section {
-      background-color: #1f2833;
+    .form-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
       padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
+      backdrop-filter: blur(10px);
     }
 
-    .form-section h2 {
+    .form-box h2 {
+      color: #ff4b2b;
       margin-bottom: 20px;
-      color: #66fcf1;
     }
 
     .form-group {
@@ -50,24 +60,25 @@
 
     .form-group label {
       display: block;
+      color: var(--text-muted);
       margin-bottom: 5px;
-      color: #c5c6c7;
     }
 
     .form-group input {
       width: 100%;
       padding: 10px;
-      border: none;
       border-radius: 5px;
+      border: none;
       font-size: 16px;
     }
 
     .form-group button {
-      background-color: #66fcf1;
-      border: none;
-      padding: 10px 20px;
-      font-weight: bold;
+      background: var(--accent-gradient);
+      color: white;
+      padding: 12px 24px;
       font-size: 16px;
+      font-weight: bold;
+      border: none;
       border-radius: 5px;
       cursor: pointer;
       margin-top: 10px;
@@ -80,10 +91,17 @@
     }
 
     .card {
-      background-color: #1f2833;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
     }
 
     .card h3 {
@@ -93,68 +111,72 @@
 
     .card p {
       margin: 6px 0;
-      color: #c5c6c7;
+      color: var(--text-muted);
     }
 
     footer {
       text-align: center;
       padding: 20px;
-      background-color: #1f2833;
-      color: #45a29e;
-      margin-top: 30px;
+      color: #aaa;
+      background: #0f2027;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Formula 1 Driver Data Portal</h1>
+    <h1>Formula 1 Driver Portal</h1>
   </header>
 
   <div class="container">
 
-    <!-- Form Section -->
-    <section class="form-section">
-      <h2>Login / Register New Player</h2>
+    <!-- Login/Register Form -->
+    <section class="form-box">
+      <h2>Register / Login New Driver</h2>
       <div class="form-group">
         <label for="playerId">Player ID</label>
-        <input type="text" id="playerId" placeholder="e.g. 101">
+        <input type="text" id="playerId" placeholder="e.g. 101" />
       </div>
       <div class="form-group">
-        <label for="playerName">Player Name</label>
-        <input type="text" id="playerName" placeholder="e.g. Jane Smith">
+        <label for="playerName">Driver Name</label>
+        <input type="text" id="playerName" placeholder="e.g. Jane Doe" />
       </div>
       <div class="form-group">
         <label for="playerTeam">Team Name</label>
-        <input type="text" id="playerTeam" placeholder="e.g. Red Bull Racing">
+        <input type="text" id="playerTeam" placeholder="e.g. Ferrari" />
       </div>
       <div class="form-group">
         <label for="playerCar">Car Model</label>
-        <input type="text" id="playerCar" placeholder="e.g. RB21">
+        <input type="text" id="playerCar" placeholder="e.g. SF-25" />
       </div>
       <div class="form-group">
         <label for="playerNationality">Nationality</label>
-        <input type="text" id="playerNationality" placeholder="e.g. UK">
+        <input type="text" id="playerNationality" placeholder="e.g. Italy" />
       </div>
       <div class="form-group">
-        <button onclick="addPlayer()">Add Player</button>
+        <button onclick="addPlayer()">Add Driver</button>
       </div>
     </section>
 
-    <!-- Player Display Section -->
-    <h2 style="color: #66fcf1;">Current Drivers</h2>
+    <!-- Driver List -->
+    <h2 style="color:#66fcf1;">Current Formula 1 Drivers</h2>
     <div class="players" id="playerList">
-      <!-- JavaScript injects player cards here -->
+      <!-- Player cards will appear here -->
     </div>
 
   </div>
 
   <footer>
-    &copy; 2025 Formula 1 Data Portal. All rights reserved.
+    &copy; 2025 Formula 1 Data Portal. Powered by Speed and Precision.
   </footer>
 
   <script>
-    // Initial 10 players
     const players = [
       { id: 1, name: "Max Verstappen", team: "Red Bull", car: "RB21", nationality: "Netherlands" },
       { id: 2, name: "Lewis Hamilton", team: "Ferrari", car: "SF-25", nationality: "UK" },
@@ -169,15 +191,15 @@
     ];
 
     function renderPlayers() {
-      const list = document.getElementById("playerList");
-      list.innerHTML = ""; // clear previous content
+      const container = document.getElementById("playerList");
+      container.innerHTML = "";
       players.forEach(player => {
-        list.innerHTML += `
+        container.innerHTML += `
           <div class="card">
             <h3>${player.name}</h3>
             <p><strong>ID:</strong> ${player.id}</p>
             <p><strong>Team:</strong> ${player.team}</p>
-            <p><strong>Car Model:</strong> ${player.car}</p>
+            <p><strong>Car:</strong> ${player.car}</p>
             <p><strong>Nationality:</strong> ${player.nationality}</p>
           </div>
         `;
@@ -192,18 +214,11 @@
       const nationality = document.getElementById('playerNationality').value.trim();
 
       if (!id || !name || !team || !car || !nationality) {
-        alert("Please fill in all fields.");
+        alert("Please complete all fields.");
         return;
       }
 
-      players.push({
-        id,
-        name,
-        team,
-        car,
-        nationality
-      });
-
+      players.push({ id, name, team, car, nationality });
       renderPlayers();
 
       // Clear form
@@ -214,9 +229,8 @@
       document.getElementById('playerNationality').value = "";
     }
 
-    // Initial render
+    // Initial load
     renderPlayers();
   </script>
-
 </body>
 </html>
