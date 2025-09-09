@@ -1,236 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Formula 1 Driver Portal</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>Formula 1 Data Dashboard</title>
   <style>
-    :root {
-      --main-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      --accent-gradient: linear-gradient(to right, #ff416c, #ff4b2b);
-      --text-light: #ffffff;
-      --text-muted: #cccccc;
-    }
-
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: var(--main-gradient);
-      color: var(--text-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
     }
 
     header {
-      padding: 30px 20px;
+      background: linear-gradient(90deg, #ff512f, #dd2476);
+      padding: 20px;
       text-align: center;
-      background: var(--accent-gradient);
-      color: white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 2.2rem;
-      text-transform: uppercase;
+      font-size: 2em;
+      font-weight: bold;
       letter-spacing: 2px;
     }
 
     .container {
-      max-width: 1100px;
-      margin: 30px auto;
-      padding: 20px;
+      padding: 30px;
+      max-width: 1000px;
+      margin: auto;
     }
 
-    .form-box {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 40px;
-      backdrop-filter: blur(10px);
-    }
-
-    .form-box h2 {
-      color: #ff4b2b;
-      margin-bottom: 20px;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      color: var(--text-muted);
-      margin-bottom: 5px;
-    }
-
-    .form-group input {
+    table {
       width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      font-size: 16px;
-    }
-
-    .form-group button {
-      background: var(--accent-gradient);
-      color: white;
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: bold;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .players {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      background-color: rgba(255, 255, 255, 0.05);
       border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    th {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    input, button {
+      padding: 10px;
+      margin: 8px 0;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+    }
+
+    input {
+      background-color: #eee;
+      color: #333;
+    }
+
+    button {
+      background: linear-gradient(to right, #11998e, #38ef7d);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .form-section {
+      background: rgba(255, 255, 255, 0.05);
       padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-      backdrop-filter: blur(10px);
-      transition: transform 0.3s ease;
+      border-radius: 10px;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .card h3 {
+    h2 {
       margin-top: 0;
-      color: #66fcf1;
-    }
-
-    .card p {
-      margin: 6px 0;
-      color: var(--text-muted);
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #aaa;
-      background: #0f2027;
-    }
-
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 1.6rem;
-      }
+      color: #f1c40f;
     }
   </style>
 </head>
 <body>
-
   <header>
-    <h1>Formula 1 Driver Portal</h1>
+    Formula 1 Data Dashboard
   </header>
 
   <div class="container">
+    <h2>Current Drivers</h2>
+    <table id="playersTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Driver Name</th>
+          <th>Car Model</th>
+          <th>Team Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Max Verstappen</td><td>RB20</td><td>Red Bull Racing</td></tr>
+        <tr><td>2</td><td>Lewis Hamilton</td><td>W15</td><td>Mercedes</td></tr>
+        <tr><td>3</td><td>Charles Leclerc</td><td>SF-24</td><td>Ferrari</td></tr>
+        <tr><td>4</td><td>Lando Norris</td><td>MCL38</td><td>McLaren</td></tr>
+        <tr><td>5</td><td>Sergio Pérez</td><td>RB20</td><td>Red Bull Racing</td></tr>
+        <tr><td>6</td><td>Carlos Sainz</td><td>SF-24</td><td>Ferrari</td></tr>
+        <tr><td>7</td><td>George Russell</td><td>W15</td><td>Mercedes</td></tr>
+        <tr><td>8</td><td>Oscar Piastri</td><td>MCL38</td><td>McLaren</td></tr>
+        <tr><td>9</td><td>Fernando Alonso</td><td>AMR24</td><td>Aston Martin</td></tr>
+      </tbody>
+    </table>
 
-    <!-- Login/Register Form -->
-    <section class="form-box">
-      <h2>Register / Login New Driver</h2>
-      <div class="form-group">
-        <label for="playerId">Player ID</label>
-        <input type="text" id="playerId" placeholder="e.g. 101" />
-      </div>
-      <div class="form-group">
-        <label for="playerName">Driver Name</label>
-        <input type="text" id="playerName" placeholder="e.g. Jane Doe" />
-      </div>
-      <div class="form-group">
-        <label for="playerTeam">Team Name</label>
-        <input type="text" id="playerTeam" placeholder="e.g. Ferrari" />
-      </div>
-      <div class="form-group">
-        <label for="playerCar">Car Model</label>
-        <input type="text" id="playerCar" placeholder="e.g. SF-25" />
-      </div>
-      <div class="form-group">
-        <label for="playerNationality">Nationality</label>
-        <input type="text" id="playerNationality" placeholder="e.g. Italy" />
-      </div>
-      <div class="form-group">
-        <button onclick="addPlayer()">Add Driver</button>
-      </div>
-    </section>
-
-    <!-- Driver List -->
-    <h2 style="color:#66fcf1;">Current Formula 1 Drivers</h2>
-    <div class="players" id="playerList">
-      <!-- Player cards will appear here -->
+    <div class="form-section">
+      <h2>Register New Driver</h2>
+      <form id="newPlayerForm">
+        <input type="text" id="newId" placeholder="Enter ID" required />
+        <input type="text" id="newName" placeholder="Enter Driver Name" required />
+        <input type="text" id="newCar" placeholder="Enter Car Model" required />
+        <input type="text" id="newTeam" placeholder="Enter Team Name" required />
+        <button type="submit">Add Driver</button>
+      </form>
     </div>
-
   </div>
 
-  <footer>
-    &copy; 2025 Formula 1 Data Portal. Powered by Speed and Precision.
-  </footer>
-
   <script>
-    const players = [
-      { id: 1, name: "Max Verstappen", team: "Red Bull", car: "RB21", nationality: "Netherlands" },
-      { id: 2, name: "Lewis Hamilton", team: "Ferrari", car: "SF-25", nationality: "UK" },
-      { id: 3, name: "Lando Norris", team: "McLaren", car: "MCL39", nationality: "UK" },
-      { id: 4, name: "Charles Leclerc", team: "Ferrari", car: "SF-25", nationality: "Monaco" },
-      { id: 5, name: "George Russell", team: "Mercedes", car: "W16", nationality: "UK" },
-      { id: 6, name: "Oscar Piastri", team: "McLaren", car: "MCL39", nationality: "Australia" },
-      { id: 7, name: "Fernando Alonso", team: "Aston Martin", car: "AMR25", nationality: "Spain" },
-      { id: 8, name: "Carlos Sainz", team: "Williams", car: "FW47", nationality: "Spain" },
-      { id: 9, name: "Esteban Ocon", team: "Haas", car: "VF-25", nationality: "France" },
-      { id: 10, name: "Pierre Gasly", team: "Alpine", car: "A524", nationality: "France" }
-    ];
+    document.getElementById('newPlayerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
 
-    function renderPlayers() {
-      const container = document.getElementById("playerList");
-      container.innerHTML = "";
-      players.forEach(player => {
-        container.innerHTML += `
-          <div class="card">
-            <h3>${player.name}</h3>
-            <p><strong>ID:</strong> ${player.id}</p>
-            <p><strong>Team:</strong> ${player.team}</p>
-            <p><strong>Car:</strong> ${player.car}</p>
-            <p><strong>Nationality:</strong> ${player.nationality}</p>
-          </div>
-        `;
-      });
-    }
+      const id = document.getElementById('newId').value.trim();
+      const name = document.getElementById('newName').value.trim();
+      const car = document.getElementById('newCar').value.trim();
+      const team = document.getElementById('newTeam').value.trim();
 
-    function addPlayer() {
-      const id = document.getElementById('playerId').value.trim();
-      const name = document.getElementById('playerName').value.trim();
-      const team = document.getElementById('playerTeam').value.trim();
-      const car = document.getElementById('playerCar').value.trim();
-      const nationality = document.getElementById('playerNationality').value.trim();
-
-      if (!id || !name || !team || !car || !nationality) {
-        alert("Please complete all fields.");
+      if (!id || !name || !car || !team) {
+        alert("Please fill in all fields.");
         return;
       }
 
-      players.push({ id, name, team, car, nationality });
-      renderPlayers();
+      const table = document.getElementById('playersTable').getElementsByTagName('tbody')[0];
+      const newRow = table.insertRow();
 
-      // Clear form
-      document.getElementById('playerId').value = "";
-      document.getElementById('playerName').value = "";
-      document.getElementById('playerTeam').value = "";
-      document.getElementById('playerCar').value = "";
-      document.getElementById('playerNationality').value = "";
-    }
+      newRow.innerHTML = `
+        <td>${id}</td>
+        <td>${name}</td>
+        <td>${car}</td>
+        <td>${team}</td>
+      `;
 
-    // Initial load
-    renderPlayers();
+      // Reset the form
+      document.getElementById('newPlayerForm').reset();
+    });
   </script>
 </body>
 </html>
