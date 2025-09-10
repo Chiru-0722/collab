@@ -3,169 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F1® | The Official Home of Formula 1</title>
+    <title>Formula 1 - The Official Home of F1</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
-
-        :root {
-            --primary-color: #E10600;
-            --secondary-color: #15151E;
-            --text-color: #FFFFFF;
-            --accent-color: #FF8000;
-        }
-
+        /* CSS Reset and Global Styles */
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--secondary-color);
-            color: var(--text-color);
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
+            background-color: #0d0d0d;
+            color: #ffffff;
+            line-height: 1.6;
         }
 
-        /* Header and Navigation Bar */
-        .header {
-            background-color: rgba(21, 21, 30, 0.9);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            transition: all 0.3s ease-in-out;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
         }
 
+        h1, h2, h3 {
+            font-family: 'Formula1 Display', sans-serif;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        h1 { font-size: 2.5em; color: #e10600; }
+        h2 { font-size: 2em; margin-bottom: 20px; }
+
+        /* Header and Navigation */
         .navbar {
+            background-color: #1a1a1a;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 5%;
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-transform: uppercase;
+        .navbar-logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #e10600;
+            text-decoration: none;
             letter-spacing: 2px;
         }
 
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 25px;
+            margin: 0;
+            padding: 0;
         }
 
-        .nav-link a {
-            color: var(--text-color);
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: #ffffff;
             text-decoration: none;
-            font-weight: 400;
+            font-weight: 500;
             transition: color 0.3s;
         }
 
-        .nav-link a:hover {
-            color: var(--primary-color);
+        .nav-links a:hover {
+            color: #e10600;
         }
 
         .login-btn {
-            background-color: transparent;
-            border: 1px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 8px 20px;
-            border-radius: 20px;
+            background-color: #e10600;
+            color: #ffffff;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            text-transform: uppercase;
-            font-weight: bold;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s;
         }
 
         .login-btn:hover {
-            background-color: var(--primary-color);
-            color: var(--text-color);
+            background-color: #ff2a2a;
         }
 
-        /* Main Content Sections */
+        /* Sections */
         .section {
-            padding: 100px 5% 50px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
+            padding: 60px 0;
+            border-bottom: 1px solid #333;
         }
 
-        #hero {
-            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Red_Bull_Ring_2016-07-02_02.jpg/1280px-Red_Bull_Ring_2016-07-02_02.jpg') no-repeat center center/cover;
-            color: var(--text-color);
-            min-height: 100vh;
+        /* Schedule and Results */
+        .schedule-grid, .results-grid {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         }
 
-        .hero-content {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 40px;
+        .race-card, .result-card {
+            background-color: #1a1a1a;
+            padding: 20px;
             border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
         }
 
-        .hero-content h1 {
-            font-size: 3.5rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+        .race-card:hover, .result-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .race-card h3, .result-card h3 {
+            margin-top: 0;
+            color: #e10600;
+        }
+
+        /* News Section */
+        .news-grid {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         }
         
-        /* Players and Cars Section */
-        #drivers-list {
-            background-color: var(--secondary-color);
-        }
-
-        .drivers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-            width: 100%;
-        }
-
-        .driver-card {
-            background-color: #20202d;
-            border-radius: 10px;
+        .news-item {
+            background-color: #1a1a1a;
             padding: 20px;
+            border-radius: 10px;
+        }
+
+        .news-item img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .news-item h4 {
+            margin-top: 0;
+            color: #e10600;
+        }
+
+        /* Drivers and Teams */
+        .driver-grid, .team-grid {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .driver-card, .team-card {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            position: relative;
         }
 
-        .driver-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-        }
-
-        .driver-card img {
+        .driver-card img, .team-card img {
             width: 100%;
             height: auto;
             border-radius: 8px;
-            object-fit: cover;
-        }
-        
-        .driver-info {
-            padding-top: 15px;
         }
 
-        .driver-info h3 {
-            margin: 0;
-            font-size: 1.4rem;
-            color: var(--primary-color);
-        }
-        
-        .driver-info p {
-            margin: 5px 0 0;
-            color: #ccc;
+        .driver-card h4, .team-card h4 {
+            margin: 10px 0 5px;
         }
 
-        /* Modal for Player Details */
+        /* Driver Details Modal */
         .modal {
             display: none;
             position: fixed;
@@ -175,66 +180,117 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
             justify-content: center;
             align-items: center;
         }
 
         .modal-content {
-            background-color: var(--secondary-color);
+            background-color: #1a1a1a;
             padding: 30px;
             border-radius: 10px;
-            position: relative;
-            max-width: 500px;
+            max-width: 600px;
+            width: 80%;
             text-align: left;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-content h3 {
-            color: var(--primary-color);
-            text-align: center;
-            font-size: 2rem;
-            margin-top: 0;
-        }
-
-        .modal-content p {
-            line-height: 1.6;
+            position: relative;
         }
 
         .close-btn {
-            color: #aaa;
+            color: #ffffff;
             position: absolute;
             top: 10px;
             right: 25px;
-            font-size: 28px;
+            font-size: 35px;
             font-weight: bold;
             cursor: pointer;
-            transition: color 0.3s;
         }
 
-        .close-btn:hover {
-            color: var(--primary-color);
+        /* Login Form */
+        .login-form-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2000;
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 400px;
         }
 
-        /* Brands/Sponsors Section */
-        #sponsors {
-            background-color: #101017;
+        .login-form-container h3 {
+            text-align: center;
+            color: #e10600;
+        }
+
+        .login-form-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-form-container input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #333;
+            background-color: #0d0d0d;
+            color: #ffffff;
+            border-radius: 5px;
+        }
+
+        .login-form-container button {
+            padding: 10px;
+            background-color: #e10600;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-form-container button:hover {
+            background-color: #ff2a2a;
+        }
+        
+        .close-login-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #1a1a1a;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        .footer h3 {
+            color: #ffffff;
         }
 
         .sponsors-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 50px;
-            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            align-items: center;
         }
 
         .sponsor-logo {
+            width: 100%;
+            height: auto;
             filter: grayscale(100%);
             opacity: 0.6;
             transition: filter 0.3s, opacity 0.3s;
-            height: 50px;
-            width: auto;
         }
 
         .sponsor-logo:hover {
@@ -245,177 +301,345 @@
 </head>
 <body>
 
-    <header class="header">
-        <nav class="navbar">
-            <div class="logo">F1®</div>
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="navbar-logo">F1</a>
             <ul class="nav-links">
-                <li class="nav-link"><a href="#hero">Home</a></li>
-                <li class="nav-link"><a href="#schedule">Schedule</a></li>
-                <li class="nav-link"><a href="#results">Results</a></li>
-                <li class="nav-link"><a href="#news">News</a></li>
-                <li class="nav-link"><a href="#drivers-list">Drivers</a></li>
-                <li class="nav-link"><a href="#teams">Teams</a></li>
+                <li><a href="#schedule">Schedule</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#drivers">Drivers</a></li>
+                <li><a href="#teams">Teams</a></li>
             </ul>
-            <button class="login-btn">Log In</button>
-        </nav>
-    </header>
+            <button class="login-btn" id="loginBtn">Login/Register</button>
+        </div>
+    </nav>
 
-    <main>
-        <section id="hero" class="section">
-            <div class="hero-content">
-                <h1>F1® Racing Official</h1>
-                <p>Welcome to the ultimate F1 experience. Stay up-to-date with the latest news, results, and driver information.</p>
-            </div>
-        </section>
-
-        <section id="schedule" class="section">
-            <h2>Race Schedule</h2>
-            <p>The 2024 season is here! Check out the full calendar.</p>
-        </section>
-
-        <section id="results" class="section">
-            <h2>Latest Results</h2>
-            <p>See who won the last Grand Prix and who is leading the championship.</p>
-        </section>
-
-        <section id="news" class="section">
-            <h2>Latest News</h2>
-            <p>Breaking news from the paddock, exclusive interviews, and analysis.</p>
-        </section>
-        
-        <section id="teams" class="section">
-            <h2>The Teams</h2>
-            <p>Meet the constructors battling for the championship trophy.</p>
-        </section>
-
-        <section id="drivers-list" class="section">
-            <h2>The Drivers & Their Cars</h2>
-            <div class="drivers-grid" id="drivers-container">
+    <section id="schedule" class="section">
+        <div class="container">
+            <h2>2025 Racing Schedule</h2>
+            <div class="schedule-grid">
+                <div class="race-card">
+                    <h3>Australian Grand Prix</h3>
+                    <p><strong>Date:</strong> March 14-16</p>
+                    <p><strong>Location:</strong> Melbourne Grand Prix Circuit</p>
+                    <p><strong>Status:</strong> Completed</p>
                 </div>
-        </section>
-
-        <section id="sponsors" class="section">
-            <h2>Our Global Partners</h2>
-            <div class="sponsors-grid">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Pirelli_logo.svg/1200px-Pirelli_logo.svg.png" alt="Pirelli" class="sponsor-logo">
-                <img src="https://logos-world.net/wp-content/uploads/2021/03/Heineken-Logo.png" alt="Heineken" class="sponsor-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Aramco_logo.svg/1200px-Aramco_logo.svg.png" alt="Aramco" class="sponsor-logo">
-                <img src="https://1000logos.net/wp-content/uploads/2020/07/Rolex-Logo.png" alt="Rolex" class="sponsor-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Lenovo_logo_2015.svg/1280px-Lenovo_logo_2015.svg.png" alt="Lenovo" class="sponsor-logo">
+                <div class="race-card">
+                    <h3>Chinese Grand Prix</h3>
+                    <p><strong>Date:</strong> March 21-23</p>
+                    <p><strong>Location:</strong> Shanghai International Circuit</p>
+                    <p><strong>Status:</strong> Upcoming</p>
+                </div>
+                <div class="race-card">
+                    <h3>Japanese Grand Prix</h3>
+                    <p><strong>Date:</strong> April 4-6</p>
+                    <p><strong>Location:</strong> Suzuka International Racing Course</p>
+                    <p><strong>Status:</strong> Upcoming</p>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-    </main>
+    <section id="results" class="section">
+        <div class="container">
+            <h2>Latest Race Results</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3>Australian Grand Prix</h3>
+                    <p><strong>1st:</strong> Max Verstappen (Red Bull)</p>
+                    <p><strong>2nd:</strong> Lando Norris (McLaren)</p>
+                    <p><strong>3rd:</strong> Lewis Hamilton (Mercedes)</p>
+                </div>
+                <div class="result-card">
+                    <h3>Bahrain Grand Prix</h3>
+                    <p><strong>1st:</strong> Charles Leclerc (Ferrari)</p>
+                    <p><strong>2nd:</strong> George Russell (Mercedes)</p>
+                    <p><strong>3rd:</strong> Sergio Perez (Red Bull)</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section id="news" class="section">
+        <div class="container">
+            <h2>Latest News & Updates</h2>
+            <div class="news-grid">
+                <div class="news-item">
+                    <h4>New Engine Regulations Announced for 2026</h4>
+                    <p>The FIA has confirmed major changes to engine regulations, focusing on sustainable fuels and hybrid power units for the 2026 season. Teams are already working on new designs to adapt to the rules.</p>
+                </div>
+                <div class="news-item">
+                    <h4>Verstappen extends contract with Red Bull</h4>
+                    <p>Reigning world champion Max Verstappen has signed a long-term contract extension with Red Bull Racing, solidifying his future with the team until 2028.</p>
+                </div>
+                <div class="news-item">
+                    <h4>Pirelli tests new tire compounds for upcoming season</h4>
+                    <p>Pirelli conducted a successful test session in Barcelona, trialing new tire compounds designed to improve durability and reduce overheating during races. The data gathered will be crucial for the next season.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="drivers" class="section">
+        <div class="container">
+            <h2>Drivers & Their Cars</h2>
+            <div class="driver-grid">
+                <div class="driver-card" data-driver-id="1">
+                    <img src="https://via.placeholder.com/200x200.png?text=Max+Verstappen" alt="Max Verstappen">
+                    <h4>Max Verstappen</h4>
+                    <p>Team: Red Bull Racing</p>
+                    <p>Car: RB21</p>
+                </div>
+                <div class="driver-card" data-driver-id="2">
+                    <img src="https://via.placeholder.com/200x200.png?text=Lewis+Hamilton" alt="Lewis Hamilton">
+                    <h4>Lewis Hamilton</h4>
+                    <p>Team: Mercedes-AMG F1</p>
+                    <p>Car: W16</p>
+                </div>
+                <div class="driver-card" data-driver-id="3">
+                    <img src="https://via.placeholder.com/200x200.png?text=Charles+Leclerc" alt="Charles Leclerc">
+                    <h4>Charles Leclerc</h4>
+                    <p>Team: Scuderia Ferrari</p>
+                    <p>Car: SF-25</p>
+                </div>
+                <div class="driver-card" data-driver-id="4">
+                    <img src="https://via.placeholder.com/200x200.png?text=Lando+Norris" alt="Lando Norris">
+                    <h4>Lando Norris</h4>
+                    <p>Team: McLaren F1 Team</p>
+                    <p>Car: MCL39</p>
+                </div>
+                <div class="driver-card" data-driver-id="5">
+                    <img src="https://via.placeholder.com/200x200.png?text=Fernando+Alonso" alt="Fernando Alonso">
+                    <h4>Fernando Alonso</h4>
+                    <p>Team: Aston Martin F1</p>
+                    <p>Car: AMR25</p>
+                </div>
+                <div class="driver-card" data-driver-id="6">
+                    <img src="https://via.placeholder.com/200x200.png?text=Sergio+Perez" alt="Sergio Perez">
+                    <h4>Sergio Perez</h4>
+                    <p>Team: Red Bull Racing</p>
+                    <p>Car: RB21</p>
+                </div>
+                <div class="driver-card" data-driver-id="7">
+                    <img src="https://via.placeholder.com/200x200.png?text=Carlos+Sainz" alt="Carlos Sainz">
+                    <h4>Carlos Sainz</h4>
+                    <p>Team: Scuderia Ferrari</p>
+                    <p>Car: SF-25</p>
+                </div>
+                <div class="driver-card" data-driver-id="8">
+                    <img src="https://via.placeholder.com/200x200.png?text=George+Russell" alt="George Russell">
+                    <h4>George Russell</h4>
+                    <p>Team: Mercedes-AMG F1</p>
+                    <p>Car: W16</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <div id="driverModal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <h3 id="modal-driver-name"></h3>
-            <p id="modal-driver-details"></p>
+            <div id="modal-details">
+                </div>
         </div>
     </div>
 
+    <section id="teams" class="section">
+        <div class="container">
+            <h2>Constructors</h2>
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="https://via.placeholder.com/200x150.png?text=Red+Bull+Racing" alt="Red Bull Racing">
+                    <h4>Red Bull Racing</h4>
+                    <p>Base: Milton Keynes, UK</p>
+                    <p>Team Principal: Christian Horner</p>
+                </div>
+                <div class="team-card">
+                    <img src="https://via.placeholder.com/200x150.png?text=Scuderia+Ferrari" alt="Scuderia Ferrari">
+                    <h4>Scuderia Ferrari</h4>
+                    <p>Base: Maranello, Italy</p>
+                    <p>Team Principal: Frédéric Vasseur</p>
+                </div>
+                <div class="team-card">
+                    <img src="https://via.placeholder.com/200x150.png?text=Mercedes+AMG+F1" alt="Mercedes-AMG F1">
+                    <h4>Mercedes-AMG F1</h4>
+                    <p>Base: Brackley, UK</p>
+                    <p>Team Principal: Toto Wolff</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <h3>Our Partners</h3>
+            <div class="sponsors-grid">
+                <img src="https://via.placeholder.com/150x50.png?text=ROLEX" alt="Rolex" class="sponsor-logo">
+                <img src="https://via.placeholder.com/150x50.png?text=HEINEKEN" alt="Heineken" class="sponsor-logo">
+                <img src="https://via.placeholder.com/150x50.png?text=PIAZZA" alt="Piazza" class="sponsor-logo">
+                <img src="https://via.placeholder.com/150x50.png?text=AMAZON+AWS" alt="AWS" class="sponsor-logo">
+                <img src="https://via.placeholder.com/150x50.png?text=Pirelli" alt="Pirelli" class="sponsor-logo">
+                <img src="https://via.placeholder.com/150x50.png?text=DHL" alt="DHL" class="sponsor-logo">
+                <img src="https://via.placeholder.com/150x50.png?text=ORACLE" alt="Oracle" class="sponsor-logo">
+                <img src="https://via.placeholder.com/150x50.png?text=QATAR+AIRWAYS" alt="Qatar Airways" class="sponsor-logo">
+            </div>
+            <p>&copy; 2025 Formula 1. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div id="loginFormContainer" class="login-form-container">
+        <span class="close-login-btn">&times;</span>
+        <h3>Register for a New Account</h3>
+        <form id="registrationForm">
+            <input type="text" id="fullName" placeholder="Full Name" required>
+            <input type="email" id="email" placeholder="Email Address" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Submit Details</button>
+        </form>
+    </div>
+
     <script>
-        const drivers = [
-            {
+        // Data for drivers to be displayed in the modal
+        const driversData = {
+            1: {
                 name: "Max Verstappen",
+                bio: "A three-time World Champion from the Netherlands. Known for his aggressive driving style and incredible race craft. He has dominated the sport in recent years with Red Bull Racing.",
+                image: "https://via.placeholder.com/300x300.png?text=Max+Verstappen",
+                car: "Red Bull RB21",
+                nationality: "Dutch",
                 team: "Red Bull Racing",
-                car: "RB20",
-                img: "https://www.formula1.com/content/dam/fom-website/drivers/M/MAXVER01_Max_Verstappen/maxver01.png.transform/9col-retina/image.png",
-                carImg: "https://www.formula1.com/content/dam/fom-website/teams/Red%20Bull/RB20-Red-Bull.jpg.transform/1col-retina/image.jpg",
-                details: "Max Verstappen is a Dutch racing driver competing in Formula One with Red Bull Racing. He is a three-time world champion and is known for his aggressive driving style and incredible race craft."
+                network: "https://www.instagram.com/maxverstappen1/" // Example
             },
-            {
-                name: "Charles Leclerc",
-                team: "Ferrari",
-                car: "SF-24",
-                img: "https://www.formula1.com/content/dam/fom-website/drivers/C/CHALEC01_Charles_Leclerc/chalec01.png.transform/9col-retina/image.png",
-                carImg: "https://www.formula1.com/content/dam/fom-website/teams/Ferrari/SF-24-Ferrari.jpg.transform/1col-retina/image.jpg",
-                details: "Charles Leclerc is a Monégasque racing driver for Scuderia Ferrari. A prodigious talent, he is widely regarded as one of the best drivers on the current grid, known for his qualifying prowess."
-            },
-            {
+            2: {
                 name: "Lewis Hamilton",
-                team: "Mercedes",
-                car: "W15",
-                img: "https://www.formula1.com/content/dam/fom-website/drivers/L/LEWHAM01_Lewis_Hamilton/lewham01.png.transform/9col-retina/image.png",
-                carImg: "https://www.formula1.com/content/dam/fom-website/teams/Mercedes/W15-Mercedes.jpg.transform/1col-retina/image.jpg",
-                details: "Lewis Hamilton is a British racing driver who has won a joint-record seven World Drivers' Championship titles. He is considered one of the most successful drivers in the history of the sport."
+                bio: "A seven-time World Champion and one of the most successful drivers in F1 history. He is a key figure in the sport's push for diversity and sustainability. He will be moving to Ferrari in 2025.",
+                image: "https://via.placeholder.com/300x300.png?text=Lewis+Hamilton",
+                car: "Mercedes W16",
+                nationality: "British",
+                team: "Mercedes-AMG F1",
+                network: "https://www.instagram.com/lewishamilton/" // Example
             },
-            {
-                name: "Fernando Alonso",
-                team: "Aston Martin",
-                car: "AMR24",
-                img: "https://www.formula1.com/content/dam/fom-website/drivers/F/FERALO01_Fernando_Alonso/feralo01.png.transform/9col-retina/image.png",
-                carImg: "https://www.formula1.com/content/dam/fom-website/teams/Aston%20Martin/AMR24-Aston-Martin.jpg.transform/1col-retina/image.jpg",
-                details: "Fernando Alonso is a Spanish racing driver currently competing for Aston Martin. A two-time world champion, he is known for his incredible longevity, race craft, and strategic intelligence."
+            3: {
+                name: "Charles Leclerc",
+                bio: "A highly talented driver from Monaco, representing the legendary Scuderia Ferrari team. Known for his qualifying speed and on-track bravery.",
+                image: "https://via.placeholder.com/300x300.png?text=Charles+Leclerc",
+                car: "Ferrari SF-25",
+                nationality: "Monegasque",
+                team: "Scuderia Ferrari",
+                network: "https://www.instagram.com/charles_leclerc/" // Example
             },
-            {
+            4: {
                 name: "Lando Norris",
-                team: "McLaren",
-                car: "MCL38",
-                img: "https://www.formula1.com/content/dam/fom-website/drivers/L/LANNOR01_Lando_Norris/lannor01.png.transform/9col-retina/image.png",
-                carImg: "https://www.formula1.com/content/dam/fom-website/teams/McLaren/MCL38-McLaren.jpg.transform/1col-retina/image.jpg",
-                details: "Lando Norris is a British-Belgian racing driver for McLaren. He is a fan favorite known for his humor, charisma, and exceptional talent on track, consistently challenging for podiums and wins."
+                bio: "A fan favorite from Great Britain, known for his charismatic personality and impressive consistency. He drives for the McLaren team and is seen as a future world champion contender.",
+                image: "https://via.placeholder.com/300x300.png?text=Lando+Norris",
+                car: "McLaren MCL39",
+                nationality: "British",
+                team: "McLaren F1 Team",
+                network: "https://www.instagram.com/landonorris/" // Example
+            },
+            5: {
+                name: "Fernando Alonso",
+                bio: "A two-time World Champion and one of the most experienced drivers on the grid. The veteran Spaniard continues to showcase his skill and determination with Aston Martin.",
+                image: "https://via.placeholder.com/300x300.png?text=Fernando+Alonso",
+                car: "Aston Martin AMR25",
+                nationality: "Spanish",
+                team: "Aston Martin F1",
+                network: "https://www.instagram.com/fernandoalonso/" // Example
+            },
+            6: {
+                name: "Sergio Perez",
+                bio: "A veteran Mexican driver who plays a crucial supporting role for his teammate at Red Bull Racing. Known for his tire management and strong race pace.",
+                image: "https://via.placeholder.com/300x300.png?text=Sergio+Perez",
+                car: "Red Bull RB21",
+                nationality: "Mexican",
+                team: "Red Bull Racing",
+                network: "https://www.instagram.com/sergioperez/" // Example
+            },
+            7: {
+                name: "Carlos Sainz",
+                bio: "A Spanish driver known for his consistent performance and strategic intelligence. He has had a successful career with multiple teams and is a top contender.",
+                image: "https://via.placeholder.com/300x300.png?text=Carlos+Sainz",
+                car: "Ferrari SF-25",
+                nationality: "Spanish",
+                team: "Scuderia Ferrari",
+                network: "https://www.instagram.com/carlossainz55/" // Example
+            },
+            8: {
+                name: "George Russell",
+                bio: "A promising young British driver who has shown immense talent and speed. A future star for the Mercedes team and a key rival to his generation's best.",
+                image: "https://via.placeholder.com/300x300.png?text=George+Russell",
+                car: "Mercedes W16",
+                nationality: "British",
+                team: "Mercedes-AMG F1",
+                network: "https://www.instagram.com/georgerussell63/" // Example
             }
-        ];
+        };
 
-        const driversContainer = document.getElementById('drivers-container');
+        // Get elements for the modal
+        const driverCards = document.querySelectorAll('.driver-card');
         const modal = document.getElementById('driverModal');
-        const modalDriverName = document.getElementById('modal-driver-name');
-        const modalDriverDetails = document.getElementById('modal-driver-details');
-        const closeBtn = document.getElementsByClassName('close-btn')[0];
+        const modalDetails = document.getElementById('modal-details');
+        const closeModalBtn = document.querySelector('.close-btn');
 
-        // Function to create and append driver cards
-        function renderDrivers() {
-            drivers.forEach(driver => {
-                const driverCard = document.createElement('div');
-                driverCard.classList.add('driver-card');
-                driverCard.innerHTML = `
-                    <img src="${driver.img}" alt="${driver.name} photo">
-                    <img src="${driver.carImg}" alt="${driver.car} car photo">
-                    <div class="driver-info">
+        // Add event listeners to each driver card
+        driverCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const driverId = card.dataset.driverId;
+                const driver = driversData[driverId];
+
+                if (driver) {
+                    modalDetails.innerHTML = `
+                        <img src="${driver.image}" alt="${driver.name}" style="width: 100%; border-radius: 8px; margin-bottom: 20px;">
                         <h3>${driver.name}</h3>
-                        <p>${driver.team}</p>
-                    </div>
-                `;
-                driverCard.addEventListener('click', () => showDriverDetails(driver));
-                driversContainer.appendChild(driverCard);
-            });
-        }
-
-        // Function to show modal with driver details
-        function showDriverDetails(driver) {
-            modalDriverName.textContent = driver.name;
-            modalDriverDetails.textContent = driver.details;
-            modal.style.display = "flex";
-        }
-
-        // Close the modal when the user clicks on the close button (x)
-        closeBtn.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // Close the modal when the user clicks anywhere outside of it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('.nav-link a').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                        <p><strong>Team:</strong> ${driver.team}</p>
+                        <p><strong>Nationality:</strong> ${driver.nationality}</p>
+                        <p><strong>Car:</strong> ${driver.car}</p>
+                        <p><strong>Bio:</strong> ${driver.bio}</p>
+                        <p><strong>Social:</strong> <a href="${driver.network}" target="_blank">${driver.name} Instagram</a></p>
+                    `;
+                    modal.style.display = 'flex';
+                }
             });
         });
 
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', () => {
-            renderDrivers();
+        // Close modal when clicking the 'x' button or outside the modal
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Login/Registration Form functionality
+        const loginBtn = document.getElementById('loginBtn');
+        const loginFormContainer = document.getElementById('loginFormContainer');
+        const closeLoginFormBtn = document.querySelector('.close-login-btn');
+        const registrationForm = document.getElementById('registrationForm');
+
+        loginBtn.addEventListener('click', () => {
+            loginFormContainer.style.display = 'block';
+        });
+
+        closeLoginFormBtn.addEventListener('click', () => {
+            loginFormContainer.style.display = 'none';
+        });
+
+        registrationForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            
+            // This is a simple client-side example. In a real application, you would send this to a server.
+            alert(`Thank you, ${fullName}! Your registration for ${email} has been submitted. You can now participate in our special events.`);
+            
+            loginFormContainer.style.display = 'none';
+            registrationForm.reset();
         });
     </script>
+
 </body>
 </html>
