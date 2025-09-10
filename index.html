@@ -3,123 +3,419 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F1 - The Official Home of Formula 1</title>
+    <title>F1® | The Official Home of Formula 1</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+        :root {
+            --primary-color: #E10600;
+            --secondary-color: #15151E;
+            --text-color: #FFFFFF;
+            --accent-color: #FF8000;
+        }
+
         body {
-            font-family: 'Formula1 Display', Arial, sans-serif;
-            background: linear-gradient(to bottom, #15151e, #000000);
-            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Header and Navigation Bar */
+        .header {
+            background-color: rgba(21, 21, 30, 0.9);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: all 0.3s ease-in-out;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            height: 100vh;
-            text-align: center;
-            animation: fadeIn 2s ease-in-out;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .prompt-container {
-            max-width: 600px;
-            padding: 40px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.05);
-            transform: translateY(20px);
-            animation: slideUp 1s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            padding: 15px 5%;
         }
 
         .logo {
-            width: 150px;
-            margin-bottom: 20px;
-        }
-
-        .main-headline {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #ff0000, #ff4d4d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
-        .sub-headline {
-            font-size: 1.2rem;
-            font-weight: 300;
-            margin-bottom: 30px;
-            line-height: 1.5;
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
         }
 
-        .question {
-            font-style: italic;
+        .nav-link a {
+            color: var(--text-color);
+            text-decoration: none;
             font-weight: 400;
-            color: #cccccc;
-            margin-top: 20px;
+            transition: color 0.3s;
+        }
+
+        .nav-link a:hover {
+            color: var(--primary-color);
+        }
+
+        .login-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+
+        /* Main Content Sections */
+        .section {
+            padding: 100px 5% 50px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        #hero {
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Red_Bull_Ring_2016-07-02_02.jpg/1280px-Red_Bull_Ring_2016-07-02_02.jpg') no-repeat center center/cover;
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        .hero-content {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            border-radius: 10px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
         
-        .description {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-top: 20px;
+        /* Players and Cars Section */
+        #drivers-list {
+            background-color: var(--secondary-color);
         }
 
-        .cta-button {
-            background-color: #e10600;
-            color: #ffffff;
-            font-size: 1rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 5px;
+        .drivers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            width: 100%;
+        }
+
+        .driver-card {
+            background-color: #20202d;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
-            transition: transform 0.3s, background-color 0.3s;
-            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
 
-        .cta-button:hover {
-            background-color: #ff2a2a;
-            transform: scale(1.05);
+        .driver-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .driver-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        
+        .driver-info {
+            padding-top: 15px;
+        }
+
+        .driver-info h3 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--primary-color);
+        }
+        
+        .driver-info p {
+            margin: 5px 0 0;
+            color: #ccc;
+        }
+
+        /* Modal for Player Details */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--secondary-color);
+            padding: 30px;
+            border-radius: 10px;
+            position: relative;
+            max-width: 500px;
+            text-align: left;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content h3 {
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 2rem;
+            margin-top: 0;
+        }
+
+        .modal-content p {
+            line-height: 1.6;
+        }
+
+        .close-btn {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--primary-color);
+        }
+
+        /* Brands/Sponsors Section */
+        #sponsors {
+            background-color: #101017;
+        }
+
+        .sponsors-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-top: 40px;
+        }
+
+        .sponsor-logo {
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: filter 0.3s, opacity 0.3s;
+            height: 50px;
+            width: auto;
+        }
+
+        .sponsor-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
         }
     </style>
 </head>
 <body>
 
-    <div class="prompt-container">
-        <h1 class="main-headline">Unleash the Ultimate F1 Experience.</h1>
-        <p class="sub-headline">Beyond the broadcast. Deeper than the data. This is your all-access pass to the world of Formula 1.</p>
-        
-        <div class="content">
-            <p class="question">The race weekend unfolds in a blur of speed and strategy. But what happens behind the garage doors? How do the drivers prepare for the most demanding circuits on earth? How do the engineers extract every ounce of performance from a championship-winning car?</p>
-            <p class="description">Get exclusive interviews, behind-the-scenes documentaries, and real-time telemetry straight from the track. Whether you're a seasoned fan or just starting your F1 journey, our content is engineered to bring you closer to the sport you love.</p>
-        </div>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">F1®</div>
+            <ul class="nav-links">
+                <li class="nav-link"><a href="#hero">Home</a></li>
+                <li class="nav-link"><a href="#schedule">Schedule</a></li>
+                <li class="nav-link"><a href="#results">Results</a></li>
+                <li class="nav-link"><a href="#news">News</a></li>
+                <li class="nav-link"><a href="#drivers-list">Drivers</a></li>
+                <li class="nav-link"><a href="#teams">Teams</a></li>
+            </ul>
+            <button class="login-btn">Log In</button>
+        </nav>
+    </header>
 
-        <button class="cta-button" id="access-button">Join the grid and go beyond the race.</button>
+    <main>
+        <section id="hero" class="section">
+            <div class="hero-content">
+                <h1>F1® Racing Official</h1>
+                <p>Welcome to the ultimate F1 experience. Stay up-to-date with the latest news, results, and driver information.</p>
+            </div>
+        </section>
+
+        <section id="schedule" class="section">
+            <h2>Race Schedule</h2>
+            <p>The 2024 season is here! Check out the full calendar.</p>
+        </section>
+
+        <section id="results" class="section">
+            <h2>Latest Results</h2>
+            <p>See who won the last Grand Prix and who is leading the championship.</p>
+        </section>
+
+        <section id="news" class="section">
+            <h2>Latest News</h2>
+            <p>Breaking news from the paddock, exclusive interviews, and analysis.</p>
+        </section>
+        
+        <section id="teams" class="section">
+            <h2>The Teams</h2>
+            <p>Meet the constructors battling for the championship trophy.</p>
+        </section>
+
+        <section id="drivers-list" class="section">
+            <h2>The Drivers & Their Cars</h2>
+            <div class="drivers-grid" id="drivers-container">
+                </div>
+        </section>
+
+        <section id="sponsors" class="section">
+            <h2>Our Global Partners</h2>
+            <div class="sponsors-grid">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Pirelli_logo.svg/1200px-Pirelli_logo.svg.png" alt="Pirelli" class="sponsor-logo">
+                <img src="https://logos-world.net/wp-content/uploads/2021/03/Heineken-Logo.png" alt="Heineken" class="sponsor-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Aramco_logo.svg/1200px-Aramco_logo.svg.png" alt="Aramco" class="sponsor-logo">
+                <img src="https://1000logos.net/wp-content/uploads/2020/07/Rolex-Logo.png" alt="Rolex" class="sponsor-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Lenovo_logo_2015.svg/1280px-Lenovo_logo_2015.svg.png" alt="Lenovo" class="sponsor-logo">
+            </div>
+        </section>
+
+    </main>
+
+    <div id="driverModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modal-driver-name"></h3>
+            <p id="modal-driver-details"></p>
+        </div>
     </div>
 
     <script>
-        document.getElementById('access-button').addEventListener('click', function() {
-            // Redirects to the official F1 website
-            window.location.href = 'https://www.formula1.com/';
+        const drivers = [
+            {
+                name: "Max Verstappen",
+                team: "Red Bull Racing",
+                car: "RB20",
+                img: "https://www.formula1.com/content/dam/fom-website/drivers/M/MAXVER01_Max_Verstappen/maxver01.png.transform/9col-retina/image.png",
+                carImg: "https://www.formula1.com/content/dam/fom-website/teams/Red%20Bull/RB20-Red-Bull.jpg.transform/1col-retina/image.jpg",
+                details: "Max Verstappen is a Dutch racing driver competing in Formula One with Red Bull Racing. He is a three-time world champion and is known for his aggressive driving style and incredible race craft."
+            },
+            {
+                name: "Charles Leclerc",
+                team: "Ferrari",
+                car: "SF-24",
+                img: "https://www.formula1.com/content/dam/fom-website/drivers/C/CHALEC01_Charles_Leclerc/chalec01.png.transform/9col-retina/image.png",
+                carImg: "https://www.formula1.com/content/dam/fom-website/teams/Ferrari/SF-24-Ferrari.jpg.transform/1col-retina/image.jpg",
+                details: "Charles Leclerc is a Monégasque racing driver for Scuderia Ferrari. A prodigious talent, he is widely regarded as one of the best drivers on the current grid, known for his qualifying prowess."
+            },
+            {
+                name: "Lewis Hamilton",
+                team: "Mercedes",
+                car: "W15",
+                img: "https://www.formula1.com/content/dam/fom-website/drivers/L/LEWHAM01_Lewis_Hamilton/lewham01.png.transform/9col-retina/image.png",
+                carImg: "https://www.formula1.com/content/dam/fom-website/teams/Mercedes/W15-Mercedes.jpg.transform/1col-retina/image.jpg",
+                details: "Lewis Hamilton is a British racing driver who has won a joint-record seven World Drivers' Championship titles. He is considered one of the most successful drivers in the history of the sport."
+            },
+            {
+                name: "Fernando Alonso",
+                team: "Aston Martin",
+                car: "AMR24",
+                img: "https://www.formula1.com/content/dam/fom-website/drivers/F/FERALO01_Fernando_Alonso/feralo01.png.transform/9col-retina/image.png",
+                carImg: "https://www.formula1.com/content/dam/fom-website/teams/Aston%20Martin/AMR24-Aston-Martin.jpg.transform/1col-retina/image.jpg",
+                details: "Fernando Alonso is a Spanish racing driver currently competing for Aston Martin. A two-time world champion, he is known for his incredible longevity, race craft, and strategic intelligence."
+            },
+            {
+                name: "Lando Norris",
+                team: "McLaren",
+                car: "MCL38",
+                img: "https://www.formula1.com/content/dam/fom-website/drivers/L/LANNOR01_Lando_Norris/lannor01.png.transform/9col-retina/image.png",
+                carImg: "https://www.formula1.com/content/dam/fom-website/teams/McLaren/MCL38-McLaren.jpg.transform/1col-retina/image.jpg",
+                details: "Lando Norris is a British-Belgian racing driver for McLaren. He is a fan favorite known for his humor, charisma, and exceptional talent on track, consistently challenging for podiums and wins."
+            }
+        ];
+
+        const driversContainer = document.getElementById('drivers-container');
+        const modal = document.getElementById('driverModal');
+        const modalDriverName = document.getElementById('modal-driver-name');
+        const modalDriverDetails = document.getElementById('modal-driver-details');
+        const closeBtn = document.getElementsByClassName('close-btn')[0];
+
+        // Function to create and append driver cards
+        function renderDrivers() {
+            drivers.forEach(driver => {
+                const driverCard = document.createElement('div');
+                driverCard.classList.add('driver-card');
+                driverCard.innerHTML = `
+                    <img src="${driver.img}" alt="${driver.name} photo">
+                    <img src="${driver.carImg}" alt="${driver.car} car photo">
+                    <div class="driver-info">
+                        <h3>${driver.name}</h3>
+                        <p>${driver.team}</p>
+                    </div>
+                `;
+                driverCard.addEventListener('click', () => showDriverDetails(driver));
+                driversContainer.appendChild(driverCard);
+            });
+        }
+
+        // Function to show modal with driver details
+        function showDriverDetails(driver) {
+            modalDriverName.textContent = driver.name;
+            modalDriverDetails.textContent = driver.details;
+            modal.style.display = "flex";
+        }
+
+        // Close the modal when the user clicks on the close button (x)
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Close the modal when the user clicks anywhere outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDrivers();
         });
     </script>
-
 </body>
 </html>
