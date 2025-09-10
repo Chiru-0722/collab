@@ -3,27 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F1® Official Site</title>
+    <title>F1 Racing Portal</title>
     <style>
-        /* CSS for a sleek, professional, and high-tech F1 aesthetic */
+        /* General body and container styles for a clean, professional look */
         :root {
-            --primary-red: #e10600; /* F1 Red */
-            --dark-bg: #0d1117;
-            --secondary-bg: #161b22;
-            --text-color: #c9d1d9;
-            --accent-color: #58a6ff; /* Blue accent */
+            --primary-color: #e10600; /* F1 red */
+            --secondary-color: #0d1117; /* Dark background for header/footer */
+            --background-color: #f5f5f5;
+            --text-color: #333333;
             --font-family: 'Arial', sans-serif;
             --border-radius: 8px;
         }
 
         body {
             font-family: var(--font-family);
-            background-color: var(--dark-bg);
+            background-color: var(--background-color);
             color: var(--text-color);
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            overflow-x: hidden;
+            transition: background-color 0.5s ease;
         }
 
         .container {
@@ -33,95 +32,110 @@
         }
 
         header {
-            background-color: var(--secondary-bg);
+            background-color: var(--secondary-color);
+            color: white;
             padding: 20px 0;
             text-align: center;
-            border-bottom: 3px solid var(--primary-red);
+            border-bottom: 5px solid var(--primary-color);
         }
 
         header h1 {
             margin: 0;
             font-size: 2.5em;
             letter-spacing: 2px;
-            color: white;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 100px 20px;
-            background: linear-gradient(rgba(13, 17, 23, 0.8), rgba(13, 17, 23, 0.8));
-            background-size: cover;
-            background-position: center;
-            animation: fadeIn 2s ease-in-out;
-        }
-
-        .hero h2 {
-            font-size: 3em;
-            color: var(--primary-red);
-            text-transform: uppercase;
-            margin: 0;
-            letter-spacing: 5px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero p {
-            font-size: 1.2em;
-            max-width: 600px;
-            margin: 20px auto;
-            color: white;
         }
 
         .section {
-            background-color: var(--secondary-bg);
+            background-color: white;
             padding: 40px;
             margin: 20px 0;
             border-radius: var(--border-radius);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            border: 1px solid #30363d;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
-            color: var(--primary-red);
-            border-bottom: 2px solid var(--primary-red);
+            color: var(--primary-color);
+            border-bottom: 2px solid #ddd;
             padding-bottom: 10px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
         }
 
+        /* Driver cards and player interface */
         .driver-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-top: 20px;
         }
 
         .driver-card {
-            background-color: #21262d;
+            background-color: #f9f9f9;
             padding: 20px;
+            border-left: 5px solid var(--primary-color);
             border-radius: var(--border-radius);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-left: 5px solid transparent;
+            cursor: pointer;
         }
-        
+
         .driver-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 25px rgba(225, 6, 0, 0.3);
-            border-left: 5px solid var(--primary-red);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
 
-        .car-model-info {
-            padding: 15px;
-            background-color: #1a1e24;
+        .player-interface {
+            display: none; /* Initially hidden */
+            background-color: #333;
+            color: white;
+            padding: 40px;
+            margin-top: 20px;
             border-radius: var(--border-radius);
-            margin-top: 15px;
-        }
-
-        .car-model-info p {
-            margin: 5px 0;
-            color: #999;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
         }
         
+        .player-interface h2 {
+            color: white;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .laps-info {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .lap-stat {
+            background-color: #444;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            flex-grow: 1;
+            margin: 0 10px;
+            min-width: 100px;
+        }
+        
+        .lap-stat h4 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #ffcc00; /* Gold */
+        }
+
+        .lap-stat p {
+            margin: 5px 0 0;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        .back-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        /* --- New Player Details Request Section (Optional) --- */
         .login-form {
             display: flex;
             flex-direction: column;
@@ -132,19 +146,13 @@
 
         .login-form input {
             padding: 12px;
-            background-color: #21262d;
-            border: 1px solid #444;
+            border: 1px solid #ccc;
             border-radius: var(--border-radius);
-            color: white;
             font-size: 16px;
         }
 
-        .login-form input::placeholder {
-            color: #8b949e;
-        }
-        
         .login-form button {
-            background: var(--primary-red);
+            background-color: var(--primary-color);
             color: white;
             padding: 15px;
             border: none;
@@ -152,27 +160,11 @@
             cursor: pointer;
             font-size: 18px;
             font-weight: bold;
-            transition: transform 0.2s ease, background-color 0.3s ease;
+            transition: background-color 0.3s ease;
         }
 
         .login-form button:hover {
             background-color: #c00500;
-            transform: scale(1.02);
-        }
-
-        .new-player-card {
-            background: linear-gradient(135deg, var(--primary-red), #ff8c00);
-            color: white;
-            padding: 25px;
-            border-radius: var(--border-radius);
-            animation: fadeIn 1s ease-in-out;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(225, 6, 0, 0.5);
-        }
-        
-        .new-player-card h3, .new-player-card p {
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
         footer {
@@ -181,136 +173,159 @@
             margin-top: 20px;
             color: #888;
         }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .driver-grid {
-                grid-template-columns: 1fr;
-            }
-        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>F1®</h1>
-        <p>The Official Home of Formula 1</p>
+        <h1>F1 Racing Portal</h1>
+        <p>Your source for F1 statistics, drivers, and race data.</p>
     </header>
-
-    <div class="hero">
-        <h2>Unleash the Speed of 2025</h2>
-        <p>Your ultimate destination for live data, driver profiles, and everything F1.</p>
-    </div>
 
     <div class="container">
 
-        <section class="section">
-            <h2>Driver & Car Models</h2>
+        <section class="section" id="main-interface">
+            <h2>Drivers Overview</h2>
             <div class="driver-grid">
-
-                <div class="driver-card">
-                    <h3>Max Verstappen 🏎️</h3>
-                    <p><strong>Team:</strong> Red Bull Racing</p>
-                    <p><strong>Nationality:</strong> Dutch</p>
-                    <div class="car-model-info">
-                        <h4>Red Bull RB21</h4>
-                        <p><strong>Power Unit:</strong> Honda RBPT</p>
-                        <p>The reigning championship car, a masterpiece of aerodynamic design and high-tech engineering, built for unparalleled speed.</p>
-                    </div>
+                <div class="driver-card" onclick="showPlayerDetails('max-verstappen')">
+                    <h3>Max Verstappen</h3>
+                    <p>Team: Red Bull Racing</p>
+                    <p>Nationality: Dutch</p>
                 </div>
-
-                <div class="driver-card">
-                    <h3>Lewis Hamilton 🇬🇧</h3>
-                    <p><strong>Team:</strong> Ferrari</p>
-                    <p><strong>Nationality:</strong> British</p>
-                    <div class="car-model-info">
-                        <h4>Ferrari SF-25</h4>
-                        <p><strong>Power Unit:</strong> Ferrari</p>
-                        <p>A new era for the Scuderia. This car embodies Ferrari's legacy of power and passion, aiming for a championship title.</p>
-                    </div>
+                <div class="driver-card" onclick="showPlayerDetails('charles-leclerc')">
+                    <h3>Charles Leclerc</h3>
+                    <p>Team: Ferrari</p>
+                    <p>Nationality: Monégasque</p>
                 </div>
-
-                <div class="driver-card">
-                    <h3>Charles Leclerc 🇲🇨</h3>
-                    <p><strong>Team:</strong> Ferrari</p>
-                    <p><strong>Nationality:</strong> Monegasque</p>
-                    <div class="car-model-info">
-                        <h4>Ferrari SF-25</h4>
-                        <p><strong>Power Unit:</strong> Ferrari</p>
-                        <p>Leclerc's partnership with the SF-25 promises to deliver consistent performance and thrilling on-track battles.</p>
-                    </div>
+                <div class="driver-card" onclick="showPlayerDetails('lewis-hamilton')">
+                    <h3>Lewis Hamilton</h3>
+                    <p>Team: Mercedes</p>
+                    <p>Nationality: British</p>
                 </div>
-
-                <div class="driver-card">
-                    <h3>Lando Norris 🇬🇧</h3>
-                    <p><strong>Team:</strong> McLaren</p>
-                    <p><strong>Nationality:</strong> British</p>
-                    <div class="car-model-info">
-                        <h4>McLaren MCL39</h4>
-                        <p><strong>Power Unit:</strong> Mercedes-AMG</p>
-                        <p>Known for its significant development gains, the MCL39 is a formidable challenger with impressive cornering speed.</p>
-                    </div>
+                <div class="driver-card" onclick="showPlayerDetails('lando-norris')">
+                    <h3>Lando Norris</h3>
+                    <p>Team: McLaren</p>
+                    <p>Nationality: British</p>
                 </div>
-
+                <div class="driver-card" onclick="showPlayerDetails('carlos-sainz')">
+                    <h3>Carlos Sainz</h3>
+                    <p>Team: Ferrari</p>
+                    <p>Nationality: Spanish</p>
+                </div>
             </div>
+        </section>
+
+        <section class="player-interface" id="player-interface">
+            <button class="back-button" onclick="hidePlayerDetails()">← Back to Drivers</button>
+            <h2 id="player-name"></h2>
+            <p id="player-details"></p>
+
+            <div class="laps-info" id="laps-info-container">
+                </div>
         </section>
 
         <section class="section">
             <h2>New Player Access Request</h2>
-            <p>Become a part of the F1 community. Request access to our exclusive data portal.</p>
+            <p>Request access to our portal to track your favorite drivers and cars.</p>
             <form id="accessForm" class="login-form">
-                <input type="text" id="playerName" placeholder="Enter your full name" required>
+                <input type="text" id="playerName" placeholder="Enter your name" required>
                 <button type="submit">Request Access</button>
             </form>
-        </section>
-
-        <section class="section" id="newPlayerSection" style="display:none;">
-            <h2>Request Highlights</h2>
-            <div class="new-player-display" id="playerDetailsContainer">
-                </div>
         </section>
 
     </div>
 
     <footer>
-        <p>&#169; 2025 F1 Data Portal. All rights reserved. Not an official Formula 1 website.</p>
+        <p>&copy; 2025 F1 Racing Portal. All rights reserved.</p>
     </footer>
 
     <script>
-        // JavaScript for handling the new player access request
-        document.getElementById('accessForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevents the page from reloading
-
-            const playerNameInput = document.getElementById('playerName');
-            const playerName = playerNameInput.value.trim();
-
-            if (playerName !== '') {
-                // Get the container for displaying details
-                const playerDetailsContainer = document.getElementById('playerDetailsContainer');
-                
-                // Create a new card for the accepted player
-                const newPlayerCard = document.createElement('div');
-                newPlayerCard.className = 'new-player-card';
-
-                // Fill the card with the player's details
-                newPlayerCard.innerHTML = `
-                    <h3>Access Accepted! ✅</h3>
-                    <p>Welcome, <strong>${playerName}</strong>!</p>
-                    <p><strong>Status:</strong> Active</p>
-                    <p><strong>Request Time:</strong> ${new Date().toLocaleString()}</p>
-                `;
-
-                // Add the new card to the top of the container
-                playerDetailsContainer.prepend(newPlayerCard);
-
-                // Make sure the section is visible
-                document.getElementById('newPlayerSection').style.display = 'block';
-
-                // Clear the input field for the next request
-                playerNameInput.value = '';
+        const driverData = {
+            'max-verstappen': {
+                name: 'Max Verstappen',
+                team: 'Red Bull Racing',
+                nationality: 'Dutch',
+                laps: [
+                    { time: '1:20.123', speed: '245 km/h', position: 'P1' },
+                    { time: '1:19.876', speed: '248 km/h', position: 'P1' },
+                    { time: '1:21.050', speed: '242 km/h', position: 'P2' }
+                ]
+            },
+            'charles-leclerc': {
+                name: 'Charles Leclerc',
+                team: 'Ferrari',
+                nationality: 'Monégasque',
+                laps: [
+                    { time: '1:20.500', speed: '244 km/h', position: 'P3' },
+                    { time: '1:20.200', speed: '246 km/h', position: 'P2' },
+                    { time: '1:20.150', speed: '247 km/h', position: 'P1' }
+                ]
+            },
+            'lewis-hamilton': {
+                name: 'Lewis Hamilton',
+                team: 'Mercedes',
+                nationality: 'British',
+                laps: [
+                    { time: '1:21.345', speed: '240 km/h', position: 'P5' },
+                    { time: '1:20.987', speed: '243 km/h', position: 'P4' },
+                    { time: '1:20.567', speed: '245 km/h', position: 'P3' }
+                ]
+            },
+            'lando-norris': {
+                name: 'Lando Norris',
+                team: 'McLaren',
+                nationality: 'British',
+                laps: [
+                    { time: '1:20.890', speed: '244 km/h', position: 'P4' },
+                    { time: '1:20.450', speed: '246 km/h', position: 'P3' },
+                    { time: '1:20.250', speed: '247 km/h', position: 'P2' }
+                ]
+            },
+            'carlos-sainz': {
+                name: 'Carlos Sainz',
+                team: 'Ferrari',
+                nationality: 'Spanish',
+                laps: [
+                    { time: '1:21.100', speed: '242 km/h', position: 'P6' },
+                    { time: '1:20.789', speed: '244 km/h', position: 'P5' },
+                    { time: '1:20.345', speed: '246 km/h', position: 'P4' }
+                ]
             }
-        });
-    </script>
+        };
 
+        function showPlayerDetails(playerId) {
+            const player = driverData[playerId];
+            if (!player) return;
+
+            // Hide the main interface and show the player's interface
+            document.getElementById('main-interface').style.display = 'none';
+            document.getElementById('player-interface').style.display = 'block';
+
+            // Populate player details
+            document.getElementById('player-name').textContent = `${player.name}`;
+            document.getElementById('player-details').textContent = `Team: ${player.team} • Nationality: ${player.nationality}`;
+
+            // Populate laps information
+            const lapsContainer = document.getElementById('laps-info-container');
+            lapsContainer.innerHTML = ''; // Clear previous data
+
+            player.laps.forEach((lap, index) => {
+                const lapStat = document.createElement('div');
+                lapStat.className = 'lap-stat';
+                lapStat.innerHTML = `
+                    <h4>Lap ${index + 1}</h4>
+                    <p>Time: ${lap.time}</p>
+                    <p>Speed: ${lap.speed}</p>
+                    <p>Position: ${lap.position}</p>
+                `;
+                lapsContainer.appendChild(lapStat);
+            });
+        }
+
+        function hidePlayerDetails() {
+            document.getElementById('player-interface').style.display = 'none';
+            document.getElementById('main-interface').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
