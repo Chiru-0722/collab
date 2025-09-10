@@ -1,181 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Formula 1 Dashboard</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #fff;
-      display: flex;
-      height: 100vh;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      width: 300px;
-      background: linear-gradient(to bottom, #1f4037, #99f2c8);
-      padding: 30px 20px;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .sidebar h2 {
-      text-align: center;
-      color: #000;
-      margin-bottom: 20px;
-    }
-
-    .sidebar form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .sidebar input, .sidebar button {
-      margin-bottom: 15px;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      font-size: 1em;
-    }
-
-    .sidebar input {
-      background-color: #f0f0f0;
-      color: #333;
-    }
-
-    .sidebar button {
-      background: linear-gradient(to right, #00c6ff, #0072ff);
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .sidebar button:hover {
-      opacity: 0.9;
-    }
-
-    /* Main content */
-    .main-content {
-      flex: 1;
-      padding: 40px;
-      overflow-y: auto;
-    }
-
-    .main-content h1 {
-      color: #f1c40f;
-      margin-bottom: 30px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    th, td {
-      padding: 15px;
-      text-align: left;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    th {
-      background-color: rgba(255, 255, 255, 0.1);
-      color: #fff;
-    }
-
-    td {
-      color: #e0e0e0;
-    }
-
-    @media (max-width: 768px) {
-      body {
-        flex-direction: column;
-      }
-
-      .sidebar {
-        width: 100%;
-        padding: 20px;
-      }
-
-      .main-content {
-        padding: 20px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formula 1 Dashboard 2025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #e10600;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        section {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h2 {
+            border-bottom: 2px solid #e10600;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        table th {
+            background-color: #e10600;
+            color: white;
+        }
+        .drivers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .driver-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .driver-card h3 {
+            margin-top: 0;
+            color: #e10600;
+        }
+        #threejs-container {
+            height: 400px;
+            background-color: #eee;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>Formula 1 2025 Dashboard</h1>
+        <p>Latest Standings, Driver Details, and 3D Car Model</p>
+    </header>
 
-  <div class="sidebar">
-    <div>
-      <h2>New Player Login</h2>
-      <form id="loginForm">
-        <input type="text" id="playerId" placeholder="Player ID" required>
-        <input type="text" id="carModel" placeholder="Car Model" required>
-        <input type="text" id="teamName" placeholder="Team Name" required>
-        <button type="submit">Add Player</button>
-      </form>
-    </div>
-  </div>
+    <section id="standings">
+        <h2>F1 2025 Driver Standings (Top 10)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Name</th>
+                    <th>Nationality</th>
+                    <th>Team</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Oscar Piastri</td>
+                    <td>Australia</td>
+                    <td>McLaren</td>
+                    <td>324</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Lando Norris</td>
+                    <td>United Kingdom</td>
+                    <td>McLaren</td>
+                    <td>293</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Max Verstappen</td>
+                    <td>Netherlands</td>
+                    <td>Red Bull Racing</td>
+                    <td>230</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>George Russell</td>
+                    <td>United Kingdom</td>
+                    <td>Mercedes</td>
+                    <td>194</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Charles Leclerc</td>
+                    <td>Monaco</td>
+                    <td>Ferrari</td>
+                    <td>163</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Lewis Hamilton</td>
+                    <td>United Kingdom</td>
+                    <td>Ferrari</td>
+                    <td>117</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>Alex Albon</td>
+                    <td>Thailand</td>
+                    <td>Williams</td>
+                    <td>70</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Andrea Kimi Antonelli</td>
+                    <td>Italy</td>
+                    <td>Mercedes</td>
+                    <td>66</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>Isack Hadjar</td>
+                    <td>France</td>
+                    <td>Racing Bulls</td>
+                    <td>38</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Nico Hülkenberg</td>
+                    <td>Germany</td>
+                    <td>Sauber</td>
+                    <td>37</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
 
-  <div class="main-content">
-    <h1>Formula 1 Drivers</h1>
-    <table id="playersTable">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Driver Name</th>
-          <th>Car Model</th>
-          <th>Team</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>1</td><td>Max Verstappen</td><td>RB20</td><td>Red Bull Racing</td></tr>
-        <tr><td>2</td><td>Lewis Hamilton</td><td>W15</td><td>Mercedes</td></tr>
-        <tr><td>3</td><td>Charles Leclerc</td><td>SF-24</td><td>Ferrari</td></tr>
-        <tr><td>4</td><td>Lando Norris</td><td>MCL38</td><td>McLaren</td></tr>
-        <tr><td>5</td><td>Sergio Pérez</td><td>RB20</td><td>Red Bull Racing</td></tr>
-        <tr><td>6</td><td>Carlos Sainz</td><td>SF-24</td><td>Ferrari</td></tr>
-        <tr><td>7</td><td>George Russell</td><td>W15</td><td>Mercedes</td></tr>
-        <tr><td>8</td><td>Oscar Piastri</td><td>MCL38</td><td>McLaren</td></tr>
-        <tr><td>9</td><td>Fernando Alonso</td><td>AMR24</td><td>Aston Martin</td></tr>
-      </tbody>
-    </table>
-  </div>
+    <section id="drivers">
+        <h2>Top 10 Driver Details</h2>
+        <div class="drivers-grid">
+            <div class="driver-card">
+                <h3>Oscar Piastri</h3>
+                <p>Nationality: Australia</p>
+                <p>Team: McLaren</p>
+                <p>Points: 324</p>
+                <p>Oscar Piastri is leading the 2025 season with impressive performances.</p>
+            </div>
+            <div class="driver-card">
+                <h3>Lando Norris</h3>
+                <p>Nationality: United Kingdom</p>
+                <p>Team: McLaren</p>
+                <p>Points: 293</p>
+                <p>Lando Norris is a strong contender with multiple wins.</p>
+            </div>
+            <div class="driver-card">
+                <h3>Max Verstappen</h3>
+                <p>Nationality: Netherlands</p>
+                <p>Team: Red Bull Racing</p>
+                <p>Points: 230</p>
+                <p>Reigning champion fighting for the title.</p>
+            </div>
+            <div class="driver-card">
+                <h3>George Russell</h3>
+                <p>Nationality: United Kingdom</p>
+                <p>Team: Mercedes</p>
+                <p>Points: 194</p>
+                <p>Consistent performer for Mercedes.</p>
+            </div>
+            <div class="driver-card">
+                <h3>Charles Leclerc</h3>
+                <p>Nationality: Monaco</p>
+                <p>Team: Ferrari</p>
+                <p>Points: 163</p>
+                <p>Fast and skilled driver for Ferrari.</p>
+            </div>
+            <div class="driver-card">
+                <h3>Lewis Hamilton</h3>
+                <p>Nationality: United Kingdom</p>
+                <p>Team: Ferrari</p>
+                <p>Points: 117</p>
+                <p>Seven-time world champion now at Ferrari.</p>
+            </div>
+            <div class="driver-card">
+                <h3>Alex Albon</h3>
+                <p>Nationality: Thailand</p>
+                <p>Team: Williams</p>
+                <p>Points: 70</p>
+                <p>Solid midfielder performer.</p>
+            </div>
+            <div class="driver-card">
+                <h3>Andrea Kimi Antonelli</h3>
+                <p>Nationality: Italy</p>
+                <p>Team: Mercedes</p>
+                <p>Points: 66</p>
+                <p>Young talent making waves.</p>
+            </div>
+            <div class="driver-card">
+                <h3>Isack Hadjar</h3>
+                <p>Nationality: France</p>
+                <p>Team: Racing Bulls</p>
+                <p>Points: 38</p>
+                <p>Emerging driver in the grid.</p>
+            </div>
+            <div class="driver-card">
+                <h3>Nico Hülkenberg</h3>
+                <p>Nationality: Germany</p>
+                <p>Team: Sauber</p>
+                <p>Points: 37</p>
+                <p>Experienced veteran.</p>
+            </div>
+        </div>
+    </section>
 
-  <script>
-    const form = document.getElementById('loginForm');
-    const table = document.getElementById('playersTable').getElementsByTagName('tbody')[0];
+    <section id="3d-model">
+        <h2>3D Revolving F1 Car Model</h2>
+        <p>Below is a simple 3D model of an F1 car that revolves. Built using Three.js.</p>
+        <div id="threejs-container"></div>
+    </section>
 
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script>
+        // Set up scene
+        const container = document.getElementById('threejs-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / 400, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(container.clientWidth, 400);
+        container.appendChild(renderer.domElement);
 
-      const id = document.getElementById('playerId').value.trim();
-      const carModel = document.getElementById('carModel').value.trim();
-      const teamName = document.getElementById('teamName').value.trim();
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
 
-      if (!id || !carModel || !teamName) {
-        alert("Please fill in all fields.");
-        return;
-      }
+        // Create simple F1 car model
+        const carGroup = new THREE.Group();
 
-      const newRow = table.insertRow();
-      newRow.innerHTML = `
-        <td>${id}</td>
-        <td>New Driver</td>
-        <td>${carModel}</td>
-        <td>${teamName}</td>
-      `;
+        // Body
+        const bodyGeometry = new THREE.BoxGeometry(4, 1, 1.5);
+        const bodyMaterial = new THREE.MeshPhongMaterial({ color: 0xe10600 });
+        const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+        carGroup.add(body);
 
-      form.reset();
-    });
-  </script>
+        // Cabin
+        const cabinGeometry = new THREE.BoxGeometry(1, 0.8, 1);
+        const cabinMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
+        const cabin = new THREE.Mesh(cabinGeometry, cabinMaterial);
+        cabin.position.set(0, 0.9, 0);
+        carGroup.add(cabin);
 
+        // Wheels
+        const wheelGeometry = new THREE.CylinderGeometry(0.4, 0.4, 0.3, 32);
+        const wheelMaterial = new THREE.MeshPhongMaterial({ color: 0x333333 });
+        
+        const frontLeftWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
+        frontLeftWheel.rotation.z = Math.PI / 2;
+        frontLeftWheel.position.set(1.5, -0.5, 1);
+        carGroup.add(frontLeftWheel);
+
+        const frontRightWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
+        frontRightWheel.rotation.z = Math.PI / 2;
+        frontRightWheel.position.set(1.5, -0.5, -1);
+        carGroup.add(frontRightWheel);
+
+        const rearLeftWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
+        rearLeftWheel.rotation.z = Math.PI / 2;
+        rearLeftWheel.position.set(-1.5, -0.5, 1);
+        carGroup.add(rearLeftWheel);
+
+        const rearRightWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
+        rearRightWheel.rotation.z = Math.PI / 2;
+        rearRightWheel.position.set(-1.5, -0.5, -1);
+        carGroup.add(rearRightWheel);
+
+        scene.add(carGroup);
+
+        camera.position.z = 5;
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            carGroup.rotation.y += 0.01; // Revolve the car
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / 400;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, 400);
+        });
+    </script>
 </body>
 </html>
