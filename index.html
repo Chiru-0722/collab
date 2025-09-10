@@ -3,120 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F1: The Ultimate Experience</title>
-
+    <title>F1 - The Official Home of Formula 1</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&family=Oswald:wght@700&display=swap');
-
-        :root {
-            --f1-red: #E10600;
-            --f1-dark: #15151E;
-            --f1-light: #F0F0F0;
-            --f1-gray: #BDBDBD;
-        }
-
         body {
-            font-family: 'Fira Sans', sans-serif;
-            background-color: var(--f1-dark);
-            color: var(--f1-light);
+            font-family: 'Formula1 Display', Arial, sans-serif;
+            background: linear-gradient(to bottom, #15151e, #000000);
+            color: #ffffff;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
             text-align: center;
+            animation: fadeIn 2s ease-in-out;
+            overflow: hidden;
+            position: relative;
         }
-
-        .container {
-            max-width: 800px;
-            padding: 2rem;
-            background-color: #21212B;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1s ease-in-out;
-        }
-
+        
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        h1 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 3.5rem;
-            color: var(--f1-red);
+        .prompt-container {
+            max-width: 600px;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.05);
+            transform: translateY(20px);
+            animation: slideUp 1s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        .main-headline {
+            font-size: 2.5rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 0.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ff0000, #ff4d4d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        h2 {
+        .sub-headline {
             font-size: 1.2rem;
-            color: var(--f1-gray);
-            margin-top: 0;
-            margin-bottom: 2rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            line-height: 1.5;
         }
 
-        p {
+        .question {
+            font-style: italic;
+            font-weight: 400;
+            color: #cccccc;
+            margin-top: 20px;
+        }
+        
+        .description {
             font-size: 1rem;
             line-height: 1.6;
-            color: var(--f1-light);
-            margin-bottom: 1.5rem;
+            margin-top: 20px;
         }
 
-        .call-to-action {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background-color: var(--f1-red);
-            color: var(--f1-light);
-            text-decoration: none;
-            text-transform: uppercase;
+        .cta-button {
+            background-color: #e10600;
+            color: #ffffff;
+            font-size: 1rem;
             font-weight: bold;
-            border-radius: 50px;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-            box-shadow: 0 4px 15px rgba(225, 6, 0, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+            margin-top: 30px;
         }
 
-        .call-to-action:hover {
-            background-color: #FF1801;
-            transform: translateY(-5px);
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            .container {
-                padding: 1.5rem;
-            }
+        .cta-button:hover {
+            background-color: #ff2a2a;
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
 
-    <div class="container" id="f1-prompt-container">
-        <h1>Unleash the Ultimate F1 Experience.</h1>
-        <h2>Beyond the broadcast. Deeper than the data. This is your all-access pass to the world of Formula 1.</h2>
-        <p>
-            The race weekend unfolds in a blur of speed and strategy. But what happens behind the garage doors? How do the drivers prepare for the most demanding circuits on earth? How do the engineers extract every ounce of performance from a championship-winning car?
-        </p>
-        <p>
-            Get exclusive interviews, behind-the-scenes documentaries, and real-time telemetry straight from the track. Whether you're a seasoned fan or just starting your F1 journey, our content is engineered to bring you closer to the sport you love.
-        </p>
-        <a href="#" class="call-to-action" id="cta-button">Join the grid and go beyond the race.</a>
+    <div class="prompt-container">
+        <h1 class="main-headline">Unleash the Ultimate F1 Experience.</h1>
+        <p class="sub-headline">Beyond the broadcast. Deeper than the data. This is your all-access pass to the world of Formula 1.</p>
+        
+        <div class="content">
+            <p class="question">The race weekend unfolds in a blur of speed and strategy. But what happens behind the garage doors? How do the drivers prepare for the most demanding circuits on earth? How do the engineers extract every ounce of performance from a championship-winning car?</p>
+            <p class="description">Get exclusive interviews, behind-the-scenes documentaries, and real-time telemetry straight from the track. Whether you're a seasoned fan or just starting your F1 journey, our content is engineered to bring you closer to the sport you love.</p>
+        </div>
+
+        <button class="cta-button" id="access-button">Join the grid and go beyond the race.</button>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const ctaButton = document.getElementById('cta-button');
-            ctaButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                alert('Welcome to the grid! Prepare for an immersive F1 experience.');
-                // In a real application, this would redirect to a sign-up page or a new section.
-                // window.location.href = 'https://www.formula1.com/en/sign-up.html';
-            });
+        document.getElementById('access-button').addEventListener('click', function() {
+            // Redirects to the official F1 website
+            window.location.href = 'https://www.formula1.com/';
         });
     </script>
 
